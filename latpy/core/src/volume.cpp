@@ -7,8 +7,7 @@
 
 extern "C" long volume(long **basis_ptr, const long n, const long m)
 {
-    MatrixXld basis(n, m);
-
+    basis = MatrixXli::Zero(n, m);
     for (long i = 0, j; i < n; ++i)
     {
         for (j = 0; j < m; ++j)
@@ -19,10 +18,10 @@ extern "C" long volume(long **basis_ptr, const long n, const long m)
 
     if(n == m)
     {
-        return std::abs(basis.determinant());
+        return static_cast<long>(fabs(basis.cast<double>().determinant()));
     }
     else
     {
-        return static_cast<long>(sqrt((basis * basis.transpose()).determinant()));
+        return static_cast<long>(sqrt((basis * basis.transpose()).cast<double>().determinant()));
     }
 }

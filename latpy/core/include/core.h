@@ -14,6 +14,8 @@ extern VectorXld B;
 extern MatrixXli basis;
 extern MatrixXld mu;
 
+void computeGSO(MatrixXli basis_, MatrixXld &mu_, VectorXld &B_);
+
 extern "C"
 {
     /**
@@ -36,5 +38,15 @@ extern "C"
      * @return long 
      */
     long volume(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief 
+     * 
+     * @param basis 
+     * @param n 
+     * @param m 
+     * @return long double
+     */
+    long double sl(long **basis_ptr, const long n, const long m);
 }
 #endif // !LAT_PY_H

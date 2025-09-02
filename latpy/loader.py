@@ -1,7 +1,5 @@
 import ctypes
 import importlib.resources
-import sys
-import pathlib
 
 def _load_shared_lib():
     package = __package__  # "latpy"

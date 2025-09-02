@@ -4,8 +4,10 @@ latpy = [
     Extension(
         "latpy.core._core",
         sources=[
+            "latpy/core/src/globals.cpp",
             "latpy/core/src/compute_gso.cpp",
-            "latpy/core/src/volume.cpp"
+            "latpy/core/src/volume.cpp",
+            "latpy/core/src/sl.cpp"
         ],
         language="c++",
         extra_compile_args=[

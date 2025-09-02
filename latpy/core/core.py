@@ -45,3 +45,19 @@ def volume(basis):
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.volume(basis_ptr, n, m)
+
+def sl(basis):
+    n, m = basis.shape
+
+    lib.sl.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.sl.restype = ctypes.c_longdouble
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.sl(basis_ptr, n, m)
