@@ -2,7 +2,15 @@ from .loader import lib
 import numpy as np
 import ctypes
 
-def compute_gso(basis):
+def compute_gso(basis: np.ndarray[int]) -> tuple[np.ndarray[float], np.ndarray[float]]:
+    """Computes the Gram-Schmidt orthogonalization of a basis.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        tuple[np.ndarray[float], np.ndarray[float]]: The orthogonalized basis and the coefficients.
+    """
     n, m = basis.shape
 
     lib.computeGSO.argtypes = (
@@ -30,7 +38,15 @@ def compute_gso(basis):
 
     return mu, B
 
-def volume(basis):
+def volume(basis: np.ndarray[int]) -> int:
+    """Computes the volume of lattice spanned by input basis vectors.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        int: The volume of the lattice.
+    """
     n, m = basis.shape
 
     lib.volume.argtypes = (
@@ -46,7 +62,15 @@ def volume(basis):
 
     return lib.volume(basis_ptr, n, m)
 
-def sl(basis):
+def sl(basis: np.ndarray[int]) -> float:
+    """Computes the GSA-slope of the lattice basis.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        float: The GSA-slope of the lattice basis.
+    """
     n, m = basis.shape
 
     lib.sl.argtypes = (
@@ -61,3 +85,27 @@ def sl(basis):
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.sl(basis_ptr, n, m)
+
+def pot(basis: np.ndarray[int]) -> float:
+    """Computes the potential of the lattice basis.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        float: The potential of the lattice basis.
+    """
+    n, m = basis.shape
+
+    lib.pot.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.pot.restype = ctypes.c_longdouble
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.pot(basis_ptr, n, m)
