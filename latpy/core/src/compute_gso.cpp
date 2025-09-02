@@ -1,4 +1,4 @@
-#include "latpy.h"
+#include "core.h"
 
 #include <iostream>
 #include <cstdlib>
