@@ -14,8 +14,27 @@ extern VectorXld B;
 extern MatrixXli basis;
 extern MatrixXld mu;
 
-extern "C" void helloPrint();
+extern "C"
+{
+    /**
+     * @brief Compute GSO-information
+     * 
+     * @param basis_ptr lattice basis matrix
+     * @param mu_ptr 
+     * @param B_ptr 
+     * @param n 
+     * @param m 
+     */
+    void computeGSO(long **basis_ptr, double **mu_ptr, double *B_ptr, const long n, const long m);
 
-extern "C" void computeGSO(long** basis_ptr, double **mu_ptr, double *B_ptr, const long n, const long m);
-
+    /**
+     * @brief Compute volume of lattice basis
+     * 
+     * @param basis_ptr 
+     * @param n 
+     * @param m 
+     * @return long 
+     */
+    long volume(long **basis_ptr, const long n, const long m);
+}
 #endif // !LAT_PY_H

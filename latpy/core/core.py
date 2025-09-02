@@ -29,3 +29,19 @@ def compute_gso(basis):
     lib.computeGSO(basis_ptr, mu_ptr, B_ptr, n, m)
 
     return mu, B
+
+def volume(basis):
+    n, m = basis.shape
+
+    lib.volume.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.volume.restype = ctypes.c_long
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.volume(basis_ptr, n, m)
