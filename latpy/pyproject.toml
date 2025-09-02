@@ -7,7 +7,7 @@ name = "latpy"
 version = "0.1.0"
 description = "Lattice reduction algorithms with C++ backend"
 authors = [
-    {name = "satoshin", email = "you@example.com"}
+    {name = "Arata Sato", email = "25rc001d@rikkyo.ac.jp"}
 ]
 license = {text = "MIT"}
 dependencies = [
