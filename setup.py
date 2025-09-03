@@ -15,9 +15,13 @@ latpy = [
             "-O3",
             "-fopenmp",
             "-march=native",
-            "-funroll-loops"
+            "-funroll-loops",
+            "-lntl"
         ],
-        extra_link_args=["-fopenmp"],
+        extra_link_args=[
+            "-fopenmp",
+            "-lntl"
+        ],
         include_dirs=[
             "latpy/core/include"
         ]

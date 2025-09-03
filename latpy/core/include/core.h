@@ -20,28 +20,28 @@ extern "C"
 {
     /**
      * @brief Compute GSO-information
-     * 
+     *
      * @param basis_ptr lattice basis matrix
-     * @param mu_ptr 
-     * @param B_ptr 
-     * @param n 
-     * @param m 
+     * @param mu_ptr
+     * @param B_ptr
+     * @param n
+     * @param m
      */
     void computeGSO(long **basis_ptr, double **mu_ptr, double *B_ptr, const long n, const long m);
 
     /**
      * @brief Compute the volume of lattice
-     * 
+     *
      * @param basis_ptr the inpute lattice basis matrix
      * @param n rank of the lattice
      * @param m null of the lattice
      * @return long the volume of the lattice basis
      */
-    long volume(long **basis_ptr, const long n, const long m);
+    char *volume(long **basis_ptr, const long n, const long m);
 
     /**
      * @brief Compute the GSA-slope of lattice basis
-     * 
+     *
      * @param basis the input lattice basis matrix
      * @param n rank of the lattice
      * @param m null of the lattice
@@ -51,11 +51,11 @@ extern "C"
 
     /**
      * @brief compute the potential of lattice basis
-     * 
-     * @param basis_ptr 
-     * @param n 
-     * @param m 
-     * @return long double 
+     *
+     * @param basis_ptr the input lattice basis matrix
+     * @param n rank of the lattice
+     * @param m null of the lattice
+     * @return long double
      */
     long double pot(long **basis_ptr, const long n, const long m);
 }
