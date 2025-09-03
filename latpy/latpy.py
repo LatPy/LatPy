@@ -38,3 +38,19 @@ class LatPy:
             float: The GSA-slope of the lattice basis.
         """
         return core.sl(self.basis)
+
+    def hf(self) -> float:
+        """Calculate the Hermite-factor of the lattice.
+
+        Returns:
+            float: The Hermite-factor of the lattice basis.
+        """
+        return core.hf(self.basis)
+
+    def rhf(self) -> float:
+        """Calculate the root of Hermite-factor of the lattice.
+
+        Returns:
+            float: The root of Hermite-factor of the lattice basis.
+        """
+        return core.rhf(self.basis)

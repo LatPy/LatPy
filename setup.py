@@ -8,7 +8,9 @@ latpy = [
             "latpy/core/src/compute_gso.cpp",
             "latpy/core/src/volume.cpp",
             "latpy/core/src/sl.cpp",
-            "latpy/core/src/pot.cpp"
+            "latpy/core/src/pot.cpp",
+            "latpy/core/src/hf.cpp",
+            "latpy/core/src/rhf.cpp"
         ],
         language="c++",
         extra_compile_args=[

@@ -58,6 +58,26 @@ extern "C"
      * @return long double
      */
     long double pot(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief compute Hermite factor of the lattice basis
+     * 
+     * @param basis_ptr lattice basis matrix
+     * @param n rank of the lattice
+     * @param m null of the lattice
+     * @return long double Hermite factor of the lattice basis
+     */
+    long double hf(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief 
+     * 
+     * @param basis_ptr 
+     * @param n 
+     * @param m 
+     * @return long double 
+     */
+    long double rhf(long **basis_ptr, const long n, const long m);
 }
 
 #endif // !LAT_PY_H
