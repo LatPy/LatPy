@@ -9,7 +9,7 @@ description = "Lattice reduction algorithms with C++ backend"
 authors = [
     {name = "Arata Sato", email = "25rc001d@rikkyo.ac.jp"}
 ]
-license = {text = "MIT"}
+license = {text = "LGPL-2.1-or-later OR MPL-2.0"}
 dependencies = [
     "numpy",
 ]
