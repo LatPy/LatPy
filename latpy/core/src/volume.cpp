@@ -1,27 +1,37 @@
 #include "core.h"
 
 #include <iostream>
+#include <sstream>
 #include <cmath>
+#include <string>
 
 #include <eigen3/Eigen/Dense>
 
-extern "C" long volume(long **basis_ptr, const long n, const long m)
+#include <NTL/ZZ.h>
+#include <NTL/mat_ZZ.h>
+
+extern "C" char *volume(long **basis_ptr, const long n, const long m)
 {
-    basis = MatrixXli::Zero(n, m);
+    NTL::mat_ZZ basis_ntl;
+    basis_ntl.SetDims(n, m);
     for (long i = 0, j; i < n; ++i)
     {
         for (j = 0; j < m; ++j)
         {
-            basis.coeffRef(i, j) = basis_ptr[i][j];
+            basis_ntl[i][j] = NTL::to_ZZ(basis_ptr[i][j]);
         }
     }
 
-    if(n == m)
+    std::stringstream ss;
+
+    if (n == m)
     {
-        return static_cast<long>(fabs(basis.cast<double>().determinant()));
+        ss << NTL::abs(NTL::determinant(basis_ntl));
+        return (char *)ss.str().c_str();
     }
     else
     {
-        return static_cast<long>(sqrt((basis * basis.transpose()).cast<double>().determinant()));
+        ss << NTL::SqrRoot(NTL::determinant(basis_ntl * NTL::transpose(basis_ntl)));
+        return (char *)ss.str().c_str();
     }
 }

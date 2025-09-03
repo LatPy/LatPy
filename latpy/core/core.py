@@ -54,13 +54,13 @@ def volume(basis: np.ndarray[int]) -> int:
         ctypes.c_long,
         ctypes.c_long
     )
-    lib.volume.restype = ctypes.c_long
+    lib.volume.restype = ctypes.c_char_p # ctypes.c_long
 
     basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
     for i in range(n):
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
-    return lib.volume(basis_ptr, n, m)
+    return int(lib.volume(basis_ptr, n, m))
 
 def sl(basis: np.ndarray[int]) -> float:
     """Computes the GSA-slope of the lattice basis.
@@ -109,3 +109,51 @@ def pot(basis: np.ndarray[int]) -> float:
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.pot(basis_ptr, n, m)
+
+def hf(basis: np.ndarray[int]) -> float:
+    """Computes Hermite-factor of the lattice basis.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        float: The Hermite-factor of the lattice basis.
+    """
+    n, m = basis.shape
+
+    lib.hf.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.hf.restype = ctypes.c_longdouble
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.hf(basis_ptr, n, m)
+
+def rhf(basis: np.ndarray[int]) -> float:
+    """Computes the root of Hermite-factor of the lattice basis.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        float: The root of Hermite-factor of the lattice basis.
+    """
+    n, m = basis.shape
+
+    lib.rhf.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.rhf.restype = ctypes.c_longdouble
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.rhf(basis_ptr, n, m)

@@ -1,10 +1,12 @@
 import latpy
 import numpy as np
 
-latpy.lib.helloPrint()
+B = np.array([[1, 2, 5], [3, 4, 6], [7, 8, 11]])
 
-B = np.array([[1, 2], [3, 4]])
-print(latpy.compute_gso(B))
-print(latpy.volume(B))
-print(latpy.sl(B))
-print(latpy.pot(B))
+C = latpy.LatPy(B)
+print(C)
+print(C.compute_gso())
+print(C.volume())
+print(C.sl())
+print(C.hf())
+print(C.rhf())
