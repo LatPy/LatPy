@@ -1,5 +1,6 @@
 from latpy.latpy import LatPy
 from .core import *
+from .reduction import *
 
 __all__ = [
     "lib", 
@@ -20,5 +21,6 @@ __all__ = [
     "gh",
     "gaussian_heuristic",
     "od",
-    "orthogonality_defect"
+    "orthogonality_defect",
+    "lagrange"
 ]
