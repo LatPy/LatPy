@@ -1,4 +1,5 @@
 from . import core
+from . import reduction
 import numpy as np
 
 class LatPy:
@@ -149,3 +150,43 @@ class LatPy:
             float: The Gaussian heuristic of the lattice basis.
         """
         return self.gh()
+
+    def od(self) -> float:
+        """Calculate the orthogonality defect of the lattice.
+
+        Returns:
+            float: The orthogonality defect of the lattice basis.
+        """
+        return core.od(self.basis)
+    
+    def orthogonality_defect(self) -> float:
+        """Alias for od method.
+
+        Returns:
+            float: The orthogonality defect of the lattice basis.
+        """
+        return self.od()
+
+    def lagrange(self) -> np.ndarray[int]:
+        """Perform Lagrange reduction on the lattice basis.
+
+        Returns:
+            np.ndarray[int]: The reduced basis.
+        """
+        return reduction.lagrange(self.basis)
+
+    def gauss(self) -> np.ndarray[int]:
+        """Alias for lagrange method.
+
+        Returns:
+            np.ndarray[int]: The reduced basis.
+        """
+        return self.lagrange()
+
+    def lagrange_gauss(self) -> np.ndarray[int]:
+        """Alias for lagrange method.
+
+        Returns:
+            np.ndarray[int]: The reduced basis.
+        """
+        return self.lagrange()

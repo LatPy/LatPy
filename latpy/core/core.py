@@ -171,3 +171,27 @@ def gh(basis: np.ndarray[int]) -> float:
     n, m = basis.shape
     
     return (math.gamma(n * 0.5 + 1) ** (1.0 / n)) / math.sqrt(math.pi)
+
+def od(basis: np.ndarray[int]) -> float:
+    """Computes the orthogonality defect of the lattice basis.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        float: The orthogonality defect of the lattice basis.
+    """
+    n, m = basis.shape
+
+    lib.od.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.od.restype = ctypes.c_longdouble
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.od(basis_ptr, n, m)

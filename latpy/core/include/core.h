@@ -78,6 +78,16 @@ extern "C"
      * @return long double root of Hermite-factor of the lattice basis
      */
     long double rhf(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief compute orthogonality defect of the lattice basis
+     * 
+     * @param basis_ptr lattice basis matrix
+     * @param n rank of the lattice
+     * @param m null of the lattice
+     * @return long double orthogonality defect of the lattice basis
+     */
+    long double od(long **basis_ptr, const long n, const long m);
 }
 
 #endif // !LAT_PY_H
