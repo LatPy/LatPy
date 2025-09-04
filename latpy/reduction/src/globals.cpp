@@ -3,3 +3,4 @@
 VectorXld B;
 MatrixXli basis;
 MatrixXld mu;
+NTL::ZZ volume;
