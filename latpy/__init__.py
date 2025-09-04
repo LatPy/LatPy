@@ -18,5 +18,7 @@ __all__ = [
     "root_hermite_factor",
     "LatPy",
     "gh",
-    "gaussian_heuristic"
+    "gaussian_heuristic",
+    "od",
+    "orthogonality_defect"
 ]

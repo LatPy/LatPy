@@ -149,3 +149,19 @@ class LatPy:
             float: The Gaussian heuristic of the lattice basis.
         """
         return self.gh()
+
+    def od(self) -> float:
+        """Calculate the orthogonality defect of the lattice.
+
+        Returns:
+            float: The orthogonality defect of the lattice basis.
+        """
+        return core.od(self.basis)
+    
+    def orthogonality_defect(self) -> float:
+        """Alias for od method.
+
+        Returns:
+            float: The orthogonality defect of the lattice basis.
+        """
+        return self.od()

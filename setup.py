@@ -10,7 +10,8 @@ latpy = [
             "latpy/core/src/sl.cpp",
             "latpy/core/src/pot.cpp",
             "latpy/core/src/hf.cpp",
-            "latpy/core/src/rhf.cpp"
+            "latpy/core/src/rhf.cpp",
+            "latpy/core/src/od.cpp",
         ],
         language="c++",
         extra_compile_args=[
