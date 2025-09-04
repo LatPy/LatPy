@@ -1,7 +1,9 @@
 from __future__ import annotations
+
+import numpy as np
+
 from . import core
 from . import reduction
-import numpy as np
 
 class LatPy:
     """
@@ -202,3 +204,16 @@ class LatPy:
             np.ndarray[int]: The reduced basis.
         """
         return LatPy(reduction.size(self.basis, eta))
+
+    def LLL(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+        """Perform LLL reduction on the lattice basis with given delta and eta parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log = reduction.LLL(self.basis, delta, eta, output_sl_log, output_rhf_log)
+        return LatPy(reduced_basis), sl_log, rhf_log

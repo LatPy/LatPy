@@ -11,7 +11,7 @@ latpy = [
             "latpy/core/src/pot.cpp",
             "latpy/core/src/hf.cpp",
             "latpy/core/src/rhf.cpp",
-            "latpy/core/src/od.cpp",
+            "latpy/core/src/od.cpp"
         ],
         language="c++",
         extra_compile_args=[
@@ -34,8 +34,12 @@ latpy = [
         sources=[
             "latpy/reduction/src/globals.cpp",
             "latpy/reduction/src/compute_gso.cpp",
+            "latpy/reduction/src/rhf.cpp",
+            "latpy/reduction/src/sl.cpp",
+            "latpy/reduction/src/update_swap_gso.cpp",
             "latpy/reduction/src/lagrange.cpp",
-            "latpy/reduction/src/size.cpp"
+            "latpy/reduction/src/size.cpp",
+            "latpy/reduction/src/LLL.cpp"
         ],
         language="c++",
         extra_compile_args=[

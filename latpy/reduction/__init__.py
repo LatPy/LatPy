@@ -4,5 +4,6 @@ from .reduction import *
 __all__ = [
     "lib", 
     "lagrange",
-    "size"
+    "size",
+    "LLL"
 ]
