@@ -1,5 +1,6 @@
 from .loader import lib
 import numpy as np
+import math
 import ctypes
 
 def compute_gso(basis: np.ndarray[int]) -> tuple[np.ndarray[float], np.ndarray[float]]:
@@ -157,3 +158,16 @@ def rhf(basis: np.ndarray[int]) -> float:
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.rhf(basis_ptr, n, m)
+
+def gh(basis: np.ndarray[int]) -> float:
+    """Computes the Gaussian heuristic of the lattice basis.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        float: The Gaussian heuristic of the lattice basis.
+    """
+    n, m = basis.shape
+    
+    return (math.gamma(n * 0.5 + 1) ** (1.0 / n)) / math.sqrt(math.pi)
