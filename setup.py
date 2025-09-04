@@ -33,7 +33,9 @@ latpy = [
         "latpy.reduction._reduction",
         sources=[
             "latpy/reduction/src/globals.cpp",
-            "latpy/reduction/src/lagrange.cpp"
+            "latpy/reduction/src/compute_gso.cpp",
+            "latpy/reduction/src/lagrange.cpp",
+            "latpy/reduction/src/size.cpp"
         ],
         language="c++",
         extra_compile_args=[
@@ -49,21 +51,6 @@ latpy = [
         ],
         include_dirs=[
             "latpy/reduction/include"
-        ]
-    ),
-    Extension(
-        "latpy._latpy",
-        sources=[
-            "src/latpy.cpp"
-        ],
-        language="c++",
-        extra_compile_args=[
-            "-O3",
-            "-fopenmp"
-        ],
-        extra_link_args=["-fopenmp"],
-        include_dirs=[
-            "include",
         ]
     )
 ]

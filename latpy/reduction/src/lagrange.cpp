@@ -8,7 +8,7 @@
 extern "C" void lagrange(long **basis_ptr, const long n, const long m)
 {
     long i, j, q;
-    MatrixXli v;
+    VectorXli v;
 
     basis = MatrixXli::Zero(n, m);
     for (i = 0; i < n; ++i)

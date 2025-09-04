@@ -1,3 +1,4 @@
+from __future__ import annotations
 from . import core
 from . import reduction
 import numpy as np
@@ -167,26 +168,37 @@ class LatPy:
         """
         return self.od()
 
-    def lagrange(self) -> np.ndarray[int]:
+    def lagrange(self) -> LatPy:
         """Perform Lagrange reduction on the lattice basis.
 
         Returns:
-            np.ndarray[int]: The reduced basis.
+            LatPy: The reduced basis.
         """
-        return reduction.lagrange(self.basis)
+        return LatPy(reduction.lagrange(self.basis))
 
-    def gauss(self) -> np.ndarray[int]:
+    def gauss(self) -> LatPy:
         """Alias for lagrange method.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        return self.lagrange()
+
+    def lagrange_gauss(self) -> LatPy:
+        """Alias for lagrange method.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        return self.lagrange()
+
+    def size(self, eta: float) -> LatPy:
+        """Perform size reduction on the lattice basis with a given eta parameter.
+
+        Args:
+            eta (float): The eta parameter for size reduction.
 
         Returns:
             np.ndarray[int]: The reduced basis.
         """
-        return self.lagrange()
-
-    def lagrange_gauss(self) -> np.ndarray[int]:
-        """Alias for lagrange method.
-
-        Returns:
-            np.ndarray[int]: The reduced basis.
-        """
-        return self.lagrange()
+        return LatPy(reduction.size(self.basis, eta))

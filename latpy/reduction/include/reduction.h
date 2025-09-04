@@ -11,9 +11,31 @@ extern VectorXld B;
 extern MatrixXli basis;
 extern MatrixXld mu;
 
-void computeGSO(MatrixXli basis_, MatrixXld &mu_, VectorXld &B_);
+/**
+ * @brief Compute GSO-informations of the input lattice
+ *
+ * @param basis_ lattice basis
+ */
+void computeGSO(MatrixXli basis_);
 
 extern "C"
 {
+    /**
+     * @brief Applies Lagrange reduction to input lattice basis
+     * 
+     * @param basis_ptr lattice basis matrix
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
     void lagrange(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief 
+     * 
+     * @param basis_ptr 
+     * @param eta 
+     * @param n 
+     * @param m 
+     */
+    void size(long **basis_ptr, const double eta, const long n, const long m);
 }
