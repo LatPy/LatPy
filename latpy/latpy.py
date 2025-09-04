@@ -217,3 +217,15 @@ class LatPy:
         """
         reduced_basis, sl_log, rhf_log = reduction.LLL(self.basis, delta, eta, output_sl_log, output_rhf_log)
         return LatPy(reduced_basis), sl_log, rhf_log
+    
+    def L3(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+        """Alias for LLL method.
+
+        Args:
+            delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        return self.LLL(delta, eta, output_sl_log, output_rhf_log)
