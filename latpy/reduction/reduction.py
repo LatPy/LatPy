@@ -50,6 +50,9 @@ def size(basis: np.ndarray[int], eta: float) -> np.ndarray[int]:
     Returns:
         np.ndarray[int]: The size reduced basis.
     """
+    if eta < 0.5 or eta > 1.0:
+        raise ValueError("Eta must be in the range [0.5, 1.0].")
+    
     n, m = basis.shape
 
     lib.size.argtypes = (
@@ -88,8 +91,13 @@ def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_s
     Returns:
         np.ndarray[int]: The LLL reduced basis.
     """
+    if delta <= 0.25 or delta >= 1:
+        raise ValueError("Delta must be in the range (0.25, 1).")
+    if eta < 0.5 or eta > np.sqrt(delta):
+        raise ValueError("Eta must be in the range [0.5, sqrt(delta)].")
+    
     n, m = basis.shape
-
+    
     lib.LLL.argtypes = (
         ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
         ctypes.c_double,
@@ -141,6 +149,11 @@ def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gam
     Returns:
         np.ndarray[int]: The Deep LLL reduced basis.
     """
+    if delta <= 0.25 or delta >= 1:
+        raise ValueError("Delta must be in the range (0.25, 1).")
+    if eta < 0.5 or eta > np.sqrt(delta):
+        raise ValueError("Eta must be in the range [0.5, sqrt(delta)].")
+    
     n, m = basis.shape
 
     lib.deepLLL.argtypes = (
