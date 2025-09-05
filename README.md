@@ -20,5 +20,5 @@ If you finished installing these libraries, you are ready to install LatPy. You 
 ## Directly Install from Git Repository
 
 ```bash
-pip install git+https://github.com/
+pip install git+https://github.com/LatPy/LatPy.git
 ```
