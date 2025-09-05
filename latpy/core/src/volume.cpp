@@ -12,6 +12,8 @@
 
 extern "C" char *volume(long **basis_ptr, const long n, const long m)
 {
+    char *cstr;
+    std::string s;
     NTL::mat_ZZ basis_ntl;
     basis_ntl.SetDims(n, m);
     for (long i = 0, j; i < n; ++i)
@@ -27,11 +29,19 @@ extern "C" char *volume(long **basis_ptr, const long n, const long m)
     if (n == m)
     {
         ss << NTL::abs(NTL::determinant(basis_ntl));
-        return (char *)ss.str().c_str();
+        s = ss.str();
+        cstr = new char[s.size() + 1];
+        std::copy(s.begin(), s.end(), cstr);
+        cstr[s.size()] = '\0';
+        return cstr;
     }
     else
     {
         ss << NTL::SqrRoot(NTL::determinant(basis_ntl * NTL::transpose(basis_ntl)));
-        return (char *)ss.str().c_str();
+        s = ss.str();
+        cstr = new char[s.size() + 1];
+        std::copy(s.begin(), s.end(), cstr);
+        cstr[s.size()] = '\0';
+        return cstr;
     }
 }
