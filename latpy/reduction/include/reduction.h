@@ -10,8 +10,10 @@ typedef Eigen::Matrix<long double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMaj
 typedef Eigen::Matrix<long double, 1, Eigen::Dynamic> VectorXld;                               // long double-type vector
 
 extern VectorXld B;
+extern VectorXld s;
 extern MatrixXli basis;
 extern MatrixXld mu;
+extern MatrixXld R;
 extern NTL::ZZ volume;
 
 /**
@@ -20,6 +22,14 @@ extern NTL::ZZ volume;
  * @param basis_ lattice basis
  */
 void computeGSO(MatrixXli basis_);
+
+/**
+ * @brief compiutes CF-information of the lattice
+ *
+ * @param n rank of lattice
+ *
+ */
+void computeCF(const long n, const long m);
 
 /**
  * @brief computes GSA-slope
@@ -119,6 +129,26 @@ extern "C"
         const double delta,
         const double eta,
         const long gamma,
+        const bool output_sl,
+        const bool output_rhf,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies LLL-reduction to lattice basis with L2-algorithm
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter to Lovasz condition
+     * @param eta reduction parameter to size-reduction condition
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void L2(
+        long **basis_ptr,
+        const double delta,
+        const double eta,
         const bool output_sl,
         const bool output_rhf,
         const long n,
