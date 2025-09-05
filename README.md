@@ -4,4 +4,5 @@ This Python module, named LatPy, is a Python module that provides many lattice a
 
 ## How to Install
 
-First, you have to install two C++ libraries, that is, NTL library and Eingen library because this module makes use of NTL library and Eingen library in C++ sources.
+First, you have to install two C++ libraries, that is, NTL library and Eingen library because this module makes use of NTL library and Eingen library in c++ sources.
+You can easily install these libraries with ``apt`` command.
