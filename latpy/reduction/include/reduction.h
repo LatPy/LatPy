@@ -23,7 +23,7 @@ void computeGSO(MatrixXli basis_);
 
 /**
  * @brief computes GSA-slope
- * 
+ *
  * @param n rank of lattice
  * @return long double GSA-slope
  */
@@ -31,11 +31,19 @@ long double sl(const long n);
 
 /**
  * @brief computes root of Hermite-factor
- * 
+ *
  * @param n rank of lattice
  * @return long double root of Hermite-factor
  */
 long double rhf(const long n);
+
+/**
+ * @brief Applies deep-insetion \sigma_{i, k} to lattice basis
+ *
+ * @param i index
+ * @param k index
+ */
+void deepInsertion(const long i, const long k);
 
 /**
  * @brief Updates GSO-information with swapping of the lattice basis vectors \bm{b}_{k-1} and \bm{b}_{k}
@@ -44,6 +52,15 @@ long double rhf(const long n);
  * @param n rank of lattice
  */
 void updateSwapGSO(const long k, const long n);
+
+/**
+ * @brief Updates GSO-informations with applying deep-insetion \sigma_{i, k} to lattice basis
+ *
+ * @param i index
+ * @param k index
+ * @param n rank of lattice
+ */
+void updateDeepInsertionGSO(const long i, const long k, const long n);
 
 extern "C"
 {
@@ -81,6 +98,27 @@ extern "C"
         long **basis_ptr,
         const double delta,
         const double eta,
+        const bool output_sl,
+        const bool output_rhf,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies DeepLLL-reduction to lattice basis
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reductino parameter to Lovasz condition
+     * @param eta reduction parameter to size reduction condition
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void deepLLL(
+        long **basis_ptr,
+        const double delta,
+        const double eta,
+        const long gamma,
         const bool output_sl,
         const bool output_rhf,
         const long n,

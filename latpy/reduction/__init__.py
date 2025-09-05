@@ -5,5 +5,6 @@ __all__ = [
     "lib", 
     "lagrange",
     "size",
-    "lll"
+    "lll",
+    "deep_lll"
 ]
