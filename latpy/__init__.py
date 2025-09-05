@@ -22,5 +22,7 @@ __all__ = [
     "gaussian_heuristic",
     "od",
     "orthogonality_defect",
-    "lagrange"
+    "lagrange",
+    "size",
+    "lll"
 ]
