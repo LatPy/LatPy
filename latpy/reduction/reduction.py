@@ -75,7 +75,7 @@ def size(basis: np.ndarray[int], eta: float) -> np.ndarray[int]:
 
     return reduced_basis
 
-def LLL(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
+def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
     """Performs LLL reduction on a basis with given delta and eta parameters.
 
     Args:

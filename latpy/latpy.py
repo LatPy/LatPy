@@ -205,7 +205,7 @@ class LatPy:
         """
         return LatPy(reduction.size(self.basis, eta))
 
-    def LLL(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+    def lll(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
         """Perform LLL reduction on the lattice basis with given delta and eta parameters.
 
         Args:
@@ -215,11 +215,11 @@ class LatPy:
         Returns:
             LatPy: The reduced basis.
         """
-        reduced_basis, sl_log, rhf_log = reduction.LLL(self.basis, delta, eta, output_sl_log, output_rhf_log)
+        reduced_basis, sl_log, rhf_log = reduction.lll(self.basis, delta, eta, output_sl_log, output_rhf_log)
         return LatPy(reduced_basis), sl_log, rhf_log
     
-    def L3(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
-        """Alias for LLL method.
+    def l3(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+        """Alias for lll method.
 
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
@@ -228,4 +228,4 @@ class LatPy:
         Returns:
             LatPy: The reduced basis.
         """
-        return self.LLL(delta, eta, output_sl_log, output_rhf_log)
+        return self.lll(delta, eta, output_sl_log, output_rhf_log)
