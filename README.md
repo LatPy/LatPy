@@ -30,9 +30,12 @@ $ pip install git+https://github.com/LatPy/LatPy.git
 You can install LatPy with cloning to local environment.
 
 ```bash
+# clones LatPy to local environment
 $ git clone https://github.com/LatPy/LatPy.git
 
+# changes directories to LatPy directories
 $ cd LatPy
 
+# installs LatPy
 LatPy$ pip install .
 ```
