@@ -15,4 +15,10 @@ sudo apt install libeigen3-dev
 sudo apt-get install -y libntl-dev
 ```
 
-If you finished installing these libraries, you are ready to install LatPy. You can install this python module with ``pip`` command.
+If you finished installing these libraries, you are ready to install LatPy. You can install this python module with ``pip`` command. It seems that there are two ways to install this python module.
+
+## Directly Install from Git Repository
+
+```bash
+pip install git+https://github.com/
+```
