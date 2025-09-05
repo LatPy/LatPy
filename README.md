@@ -17,7 +17,7 @@ $ sudo apt-get install -y libntl-dev
 
 If you finished installing these libraries, you are ready to install LatPy. You can install this python module with ``pip`` command. It seems that there are two ways to install this python module.
 
-## Directly Install from Git Repository
+## Directly Install from Git Repository (Recommended)
 
 You can directly install LatPy with url of this git repository using the below command.
 
@@ -25,7 +25,7 @@ You can directly install LatPy with url of this git repository using the below c
 $ pip install git+https://github.com/LatPy/LatPy.git
 ```
 
-## Clone And Install
+## Clone And Install (Non-Recommended)
 
 You can install LatPy with cloning to local environment.
 
