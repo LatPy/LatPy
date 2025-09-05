@@ -34,6 +34,7 @@ latpy = [
         sources=[
             "latpy/reduction/src/globals.cpp",
             "latpy/reduction/src/compute_gso.cpp",
+            "latpy/reduction/src/compute_cf.cpp",
             "latpy/reduction/src/deep_insertion.cpp",
             "latpy/reduction/src/rhf.cpp",
             "latpy/reduction/src/sl.cpp",
@@ -42,7 +43,8 @@ latpy = [
             "latpy/reduction/src/lagrange.cpp",
             "latpy/reduction/src/size.cpp",
             "latpy/reduction/src/LLL.cpp",
-            "latpy/reduction/src/deep_LLL.cpp"
+            "latpy/reduction/src/deep_LLL.cpp",
+            "latpy/reduction/src/L2.cpp"
         ],
         language="c++",
         extra_compile_args=[
