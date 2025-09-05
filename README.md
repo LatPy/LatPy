@@ -39,3 +39,24 @@ $ cd LatPy
 # installs LatPy
 LatPy$ pip install .
 ```
+
+## Check If Correctly Installed
+
+If you want to check if LatPy was correctly installed, you can check it with running a simple test code, for example the below code.
+
+```python
+import latpy
+import numpy as np
+
+B = np.random.randint(100, 999, size=(50, 50), dtype=np.int64)
+
+C = latpy.LatPy(B)
+print(C)
+print(C.compute_gso())
+print(C.sl())
+print(C.pot())
+print(C.size(0.5))
+print(C.lll())
+```
+
+If the above code behaves with no problem, it seems that LatPy was correctly Installed.
