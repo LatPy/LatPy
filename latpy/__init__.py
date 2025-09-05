@@ -24,5 +24,6 @@ __all__ = [
     "orthogonality_defect",
     "lagrange",
     "size",
-    "lll"
+    "lll",
+    "deep_lll"
 ]

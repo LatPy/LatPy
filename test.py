@@ -1,11 +1,7 @@
 import latpy
 import numpy as np
 
-B = np.array([
-    [1, 2, 5], 
-    [3, 4, 6], 
-    [7, 8, 11]
-], dtype=np.int64)
+B = np.random.randint(100, 999, size=(50, 50), dtype=np.int64)
 
 C = latpy.LatPy(B)
 print(C)
@@ -20,3 +16,4 @@ print(C.od())
 print(C.size(0.5))
 print(C.size(0.5).compute_gso())
 print(C.lll())
+print(C.deep_lll())

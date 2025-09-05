@@ -61,7 +61,7 @@ def volume(basis: np.ndarray[int]) -> int:
     for i in range(n):
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
-    return int(lib.volume(basis_ptr, n, m))
+    return int(lib.volume(basis_ptr, n, m).decode("utf-8"))
 
 def sl(basis: np.ndarray[int]) -> float:
     """Computes the GSA-slope of the lattice basis.
