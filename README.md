@@ -1,6 +1,6 @@
 # LatPy
 
-This Python module, named LatPy, is a Python module that provides many lattice algorithms for experiment, implementation, or analytics. For example, lattice reductions, solving lattice problems.
+This python module, named LatPy, is a python module that provides many lattice algorithms for experiment, implementation, or analytics. For example, lattice reductions, solving lattice problems.
 
 ## How to Install
 
@@ -14,3 +14,5 @@ sudo apt install libeigen3-dev
 # installs NTL library
 sudo apt-get install -y libntl-dev
 ```
+
+If you finished installing these libraries, you are ready to install LatPy. You can install this python module with ``pip`` command.
