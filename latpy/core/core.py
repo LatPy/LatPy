@@ -195,3 +195,56 @@ def od(basis: np.ndarray[int]) -> float:
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.od(basis_ptr, n, m)
+
+def is_size(basis: np.ndarray[int]) -> bool:
+    """Checks if the lattice basis is of a certain size.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        bool: True if the basis is of the desired size, False otherwise.
+    """
+    n, m = basis.shape
+    
+    lib.isSize.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.isSize.restype = ctypes.c_bool
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.isSize(basis_ptr, n, m)
+
+def is_weakly_lll(basis: np.ndarray[int], delta: float) -> bool:
+    """Checks if the lattice basis is weakly LLL-reduced, that is, satisfies Lovasz condition with a given delta parameter.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+        delta (float): The delta parameter for the weakly LLL condition.
+
+    Returns:
+        bool: True if the basis is weakly LLL-reduced, False otherwise.
+    """
+    if delta < 0.25 or delta >= 1.0:
+        raise ValueError("Delta must be in the range [0.25, 1.0).")
+    
+    n, m = basis.shape
+
+    lib.isWeaklyLLL.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_double,
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.isWeaklyLLL.restype = ctypes.c_bool
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.isWeaklyLLL(basis_ptr, ctypes.c_double(delta), n, m)
