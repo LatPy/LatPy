@@ -81,13 +81,24 @@ extern "C"
 
     /**
      * @brief compute orthogonality defect of the lattice basis
-     * 
+     *
      * @param basis_ptr lattice basis matrix
      * @param n rank of the lattice
      * @param m null of the lattice
      * @return long double orthogonality defect of the lattice basis
      */
     long double od(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief Checks if lattice basis is size-reduced or not
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param n rank of lattice
+     * @param m null of lattice
+     * @return true if lattice basis is size-reduced
+     * @return false if lattice basis is not size-reduced
+     */
+    bool isSize(long **basis_ptr, const long n, const long m);
 }
 
 #endif // !LAT_PY_H

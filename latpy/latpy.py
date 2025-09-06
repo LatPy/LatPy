@@ -170,6 +170,22 @@ class LatPy:
         """
         return self.od()
 
+    def is_size(self) -> bool:
+        """Check if the basis is size reduced.
+
+        Returns:
+            bool: True if the basis is size reduced, False otherwise.
+        """
+        return core.is_size(self.basis)
+    
+    def is_size_reduced(self) -> bool:
+        """Alias for is_size method.
+
+        Returns:
+            bool: True if the basis is size reduced, False otherwise.
+        """
+        return self.is_size()
+    
     def lagrange(self) -> LatPy:
         """Perform Lagrange reduction on the lattice basis.
 

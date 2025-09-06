@@ -1,5 +1,5 @@
 from .loader import lib
-from .core import compute_gso, volume, sl, pot, hf, rhf, gh, od
+from .core import compute_gso, volume, sl, pot, hf, rhf, gh, od, is_size
 
 __all__ = [
     "lib", 
@@ -10,5 +10,6 @@ __all__ = [
     "hf", 
     "rhf", 
     "gh",
-    "od"
+    "od",
+    "is_size"
 ]

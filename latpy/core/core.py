@@ -195,3 +195,27 @@ def od(basis: np.ndarray[int]) -> float:
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.od(basis_ptr, n, m)
+
+def is_size(basis: np.ndarray[int]) -> bool:
+    """Checks if the lattice basis is of a certain size.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        bool: True if the basis is of the desired size, False otherwise.
+    """
+    n, m = basis.shape
+    
+    lib.isSize.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.isSize.restype = ctypes.c_bool
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.isSize(basis_ptr, n, m)
