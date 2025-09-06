@@ -1,7 +1,7 @@
 import latpy
 import numpy as np
 
-B = np.random.randint(100, 999, size=(3, 3), dtype=np.int64)
+B = np.random.randint(100, 999, size=(10, 10), dtype=np.int64)
 
 C = latpy.LatPy(B)
 print(C)
