@@ -25,6 +25,7 @@ MatrixXli seysenUnimodular(const MatrixXld R_, const long n, const long m)
 
         R21 = U22.cast<long double>() * R21;
         U21 = (-R21 * R11.inverse()).array().round().cast<long>();
+        R21 += U21.cast<long double>() * R11;
         U21 = U21 * U11;
 
         for (long i = 0, j; i < n; ++i)
