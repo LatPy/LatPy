@@ -20,11 +20,15 @@ ext_modules = [
             "-O3",
             "-fopenmp",
             "-march=native",
-            "-funroll-loops"
+            "-funroll-loops",
+            "-DEIGEN_INITIALIZE_MATRICES_BY_NAN",
+            "-DEIGEN_NO_DEBUG=0"
         ],
         extra_link_args=[
             "-fopenmp",
-            "-lntl"
+            "-lntl",
+            "-DEIGEN_INITIALIZE_MATRICES_BY_NAN",
+            "-DEIGEN_NO_DEBUG=0"
         ],
         include_dirs=[
             "latpy/core/include"
@@ -45,20 +49,58 @@ ext_modules = [
             "latpy/reduction/src/size.cpp",
             "latpy/reduction/src/LLL.cpp",
             "latpy/reduction/src/deep_LLL.cpp",
-            "latpy/reduction/src/L2.cpp"
+            "latpy/reduction/src/L2.cpp",
+            "latpy/svp/src/globals.cpp",
+            "latpy/svp/src/coeff_pruning.cpp",
+            "latpy/svp/src/enum_sv.cpp",
+            "latpy/reduction/src/bkz.cpp"
         ],
         language="c++",
         extra_compile_args=[
             "-O3",
             "-fopenmp",
             "-march=native",
-            "-funroll-loops"
+            "-funroll-loops",
+            "-DEIGEN_INITIALIZE_MATRICES_BY_NAN",
+            "-DEIGEN_NO_DEBUG=0"
         ],
         extra_link_args=[
             "-fopenmp",
-            "-lntl"
+            "-lntl",
+            "-DEIGEN_INITIALIZE_MATRICES_BY_NAN",
+            "-DEIGEN_NO_DEBUG=0"
         ],
         include_dirs=[
+            "latpy/reduction/include",
+            "latpy/svp/include",
+        ]
+    ),
+    Extension(
+        "latpy.svp._svp",
+        sources=[
+            "latpy/reduction/src/globals.cpp",
+            "latpy/reduction/src/compute_gso.cpp",
+            "latpy/svp/src/globals.cpp",
+            "latpy/svp/src/coeff_pruning.cpp",
+            "latpy/svp/src/enum_sv.cpp"
+        ],
+        language="c++",
+        extra_compile_args=[
+            "-O3",
+            "-fopenmp",
+            "-march=native",
+            "-funroll-loops",
+            "-DEIGEN_INITIALIZE_MATRICES_BY_NAN",
+            "-DEIGEN_NO_DEBUG=0"
+        ],
+        extra_link_args=[
+            "-fopenmp",
+            "-lntl",
+            "-DEIGEN_INITIALIZE_MATRICES_BY_NAN",
+            "-DEIGEN_NO_DEBUG=0"
+        ],
+        include_dirs=[
+            "latpy/svp/include",
             "latpy/reduction/include"
         ]
     )
