@@ -4,6 +4,7 @@ import numpy as np
 
 from . import core
 from . import reduction
+from . import svp
 
 class LatPy:
     """
@@ -347,3 +348,14 @@ class LatPy:
             LatPy: The reduced basis.
         """
         return self.deep_lll(delta, eta, gamma, output_sl_log, output_rhf_log)
+    
+    def enum_sv(self, pruning: bool = False) -> np.ndarray[int]:
+        """Enumerates the shortest vector in the lattice basis using the SVP algorithm.
+
+        Args:
+            pruning (bool, optional): Whether to use pruning. Defaults to False.
+
+        Returns:
+            np.ndarray[int]: The shortest vector found in the lattice.
+        """
+        return svp.enum_sv(self.basis, pruning)

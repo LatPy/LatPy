@@ -61,6 +61,31 @@ ext_modules = [
         include_dirs=[
             "latpy/reduction/include"
         ]
+    ),
+    Extension(
+        "latpy.svp._svp",
+        sources=[
+            "latpy/core/src/globals.cpp",
+            "latpy/core/src/compute_gso.cpp",
+            "latpy/svp/src/globals.cpp",
+            "latpy/svp/src/coeff_pruning.cpp",
+            "latpy/svp/src/enum_sv.cpp"
+        ],
+        language="c++",
+        extra_compile_args=[
+            "-O3",
+            "-fopenmp",
+            "-march=native",
+            "-funroll-loops"
+        ],
+        extra_link_args=[
+            "-fopenmp",
+            "-lntl"
+        ],
+        include_dirs=[
+            "latpy/svp/include",
+            "latpy/core/include"
+        ]
     )
 ]
 

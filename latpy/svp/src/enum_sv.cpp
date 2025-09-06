@@ -1,0 +1,120 @@
+#include "svp.h"
+
+#include <iostream>
+#include <cmath>
+#include <vector>
+
+#include <eigen3/Eigen/Dense>
+
+#include "core.h"
+
+extern "C" void enumSV(long **basis_ptr, long *coeff, const bool pruning, const long n, const long m)
+{
+    bool has_solution = false;
+    long i, j, r[n + 1];
+    long last_nonzero = 0;
+    long double temp;
+    std::vector<long> width(n, 0);
+    VectorXli temp_vector = VectorXli::Zero(n);
+    VectorXld radius(n);
+    std::vector<long double> center(n, 0);
+    std::vector<std::vector<long double>> sigma(n + 1, std::vector<long double>(n, 0));
+    std::vector<long double> rho(n + 1, 0);
+
+    basis = MatrixXli::Zero(n, m);
+    for (i = 0; i < n; ++i)
+    {
+        for (j = 0; j < m; ++j)
+        {
+            basis.coeffRef(i, j) = basis_ptr[i][j];
+        }
+    }
+    computeGSO(basis, mu, B);
+
+    // Set radius for enumeration
+    coeffPruning(n, pruning);
+    for (i = 0; i < n; ++i)
+    {
+        radius.coeffRef(i) = eps.coeff(n - i - 1) * B.coeff(0);
+    }
+
+    temp_vector.coeffRef(0) = 1;
+    for (i = 0; i < n; ++i)
+    {
+        r[i] = i;
+    }
+
+    for (long k = 0;;)
+    {
+        temp = static_cast<long double>(temp_vector.coeff(k)) - center[k];
+        temp *= temp;
+        rho[k] = rho[k + 1] + temp * B.coeff(k);
+
+        if (rho[k] <= radius.coeff(n - k - 1))
+        {
+            if (k == 0)
+            {
+                has_solution = true;
+                for (i = 0; i < n; ++i)
+                {
+                    coeff[i] = temp_vector.coeff(i);
+                }
+                for (i = 0; i < n; ++i)
+                {
+                    radius.coeffRef(i) = fminl(0.99 * rho[0], radius.coeff(i));
+                }
+            }
+            else
+            {
+                --k;
+                if (r[k + 1] >= r[k])
+                {
+                    r[k] = r[k + 1];
+                }
+                for (i = r[k]; i > k; --i)
+                {
+                    sigma[i][k] = sigma[i + 1][k] + mu.coeff(i, k) * temp_vector.coeff(i);
+                }
+                center[k] = -sigma[k + 1][k];
+                temp_vector.coeffRef(k) = roundf(center[k]);
+                width[k] = 1;
+            }
+        }
+        else
+        {
+            ++k;
+            if (k == n)
+            {
+                if (not has_solution)
+                {
+                    for (i = 0; i < n; ++i)
+                    {
+                        coeff[i] = 0;
+                    }
+                }
+                return;
+            }
+            else
+            {
+                r[k] = k;
+                if (k >= last_nonzero)
+                {
+                    last_nonzero = k;
+                    ++temp_vector.coeffRef(k);
+                }
+                else
+                {
+                    if (temp_vector.coeff(k) > center[k])
+                    {
+                        temp_vector.coeffRef(k) -= width[k];
+                    }
+                    else
+                    {
+                        temp_vector.coeffRef(k) += width[k];
+                    }
+                    ++width[k];
+                }
+            }
+        }
+    }
+}
