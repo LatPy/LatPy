@@ -33,5 +33,6 @@ __all__ = [
     "lll",
     "deep_lll",
     "l2",
-    "enum_sv"
+    "enum_sv",
+    "bkz"
 ]

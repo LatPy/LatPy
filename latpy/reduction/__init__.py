@@ -7,5 +7,6 @@ __all__ = [
     "size",
     "lll",
     "deep_lll",
-    "l2"
+    "l2",
+    "bkz"
 ]

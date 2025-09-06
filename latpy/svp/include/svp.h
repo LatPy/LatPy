@@ -11,6 +11,8 @@ extern VectorXld eps;
 
 void coeffPruning(const long n, const bool pruning);
 
+bool enumSV(VectorXli &coeff, const double radius_, MatrixXld mu, VectorXld B, const bool pruning, const long start, const long end);
+
 extern "C"
 {
     void enumSV(long **basis_ptr, long *coeff, const bool pruning, const long n, const long m);

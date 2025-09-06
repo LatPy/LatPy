@@ -359,3 +359,36 @@ class LatPy:
             np.ndarray[int]: The shortest vector found in the lattice.
         """
         return svp.enum_sv(self.basis, pruning)
+
+    def bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+        """Perform BKZ reduction on the lattice basis with given delta and beta parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for BKZ reduction. Defaults to 0.99.
+            beta (int, optional): The block size parameter for BKZ reduction. Defaults to 20.
+            max_loops (int, optional): The maximum number of tours through the basis. Defaults to -1 (no limit).
+            pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log = reduction.bkz(self.basis, delta, beta, max_loops, pruning, output_sl_log, output_rhf_log)
+        return LatPy(reduced_basis), sl_log, rhf_log
+    
+    def block_korkine_zolotarev(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+        """Alias for bkz method.
+
+        Args:
+            delta (float, optional): The delta parameter for BKZ reduction. Defaults to 0.99.
+            beta (int, optional): The block size parameter for BKZ reduction. Defaults to 20.
+            max_loops (int, optional): The maximum number of tours through the basis. Defaults to -1 (no limit).
+            pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        return self.bkz(delta, beta, max_loops, pruning, output_sl_log, output_rhf_log)
