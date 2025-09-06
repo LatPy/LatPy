@@ -26,7 +26,6 @@ void computeGSO(MatrixXli basis_, MatrixXld &mu_, VectorXld &B_)
     }
 }
 
-
 extern "C" void computeGSO(long **basis_ptr, double **mu_ptr, double *B_ptr, const long n, const long m)
 {
     long i, j;
