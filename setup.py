@@ -1,6 +1,6 @@
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 
-latpy = [
+ext_modules = [
     Extension(
         "latpy.core._core",
         sources=[
@@ -20,8 +20,7 @@ latpy = [
             "-O3",
             "-fopenmp",
             "-march=native",
-            "-funroll-loops",
-            "-lntl"
+            "-funroll-loops"
         ],
         extra_link_args=[
             "-fopenmp",
@@ -53,8 +52,7 @@ latpy = [
             "-O3",
             "-fopenmp",
             "-march=native",
-            "-funroll-loops",
-            "-lntl"
+            "-funroll-loops"
         ],
         extra_link_args=[
             "-fopenmp",
@@ -69,8 +67,8 @@ latpy = [
 setup(
     name="latpy",
     version="0.1.0",
-    description="Example ctypes-based library",
-    packages=["latpy"],
-    ext_modules=latpy,
+    description="Lattice reduction algorithms with C++ backend",
+    packages=find_packages(),
+    ext_modules=ext_modules,
     python_requires=">=3.8",
 )
