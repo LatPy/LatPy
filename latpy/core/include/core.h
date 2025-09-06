@@ -16,6 +16,10 @@ extern MatrixXld mu;
 
 void computeGSO(MatrixXli basis_, MatrixXld &mu_, VectorXld &B_);
 
+MatrixXld computeR(MatrixXli basis_);
+
+bool isSeysen(const MatrixXld R);
+
 extern "C"
 {
     /**
@@ -99,6 +103,17 @@ extern "C"
      * @return false if lattice basis is not size-reduced
      */
     bool isSize(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief Checks if lattice basis is seysen-reduced or not
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param n rank of lattice
+     * @param m null of lattice
+     * @return true if lattice basis is seysen-reduced
+     * @return false if lattice basis is not seysen-reduced
+     */
+    bool isSeysen(long **basis_ptr, const long n, const long m);
 
     /**
      * @brief Checks if lattice basis is weakly-LLL-reduced, that is, satisfies Lovasz condition or not

@@ -179,6 +179,14 @@ class LatPy:
         """
         return core.is_size(self.basis)
     
+    def is_seysen(self) -> bool:
+        """Check if the basis is Seysen reduced.
+
+        Returns:
+            bool: True if the basis is Seysen reduced, False otherwise.
+        """
+        return core.is_seysen(self.basis)
+
     def is_size_reduced(self) -> bool:
         """Alias for is_size method.
 
@@ -266,6 +274,14 @@ class LatPy:
         """
         return LatPy(reduction.size(self.basis, eta))
 
+    def seysen(self) -> LatPy:
+        """Perform Seysen reduction on the lattice basis.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        return LatPy(reduction.seysen(self.basis))
+    
     def lll(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
         """Perform LLL reduction on the lattice basis with given delta and eta parameters.
 

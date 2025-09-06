@@ -248,3 +248,27 @@ def is_weakly_lll(basis: np.ndarray[int], delta: float) -> bool:
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.isWeaklyLLL(basis_ptr, ctypes.c_double(delta), n, m)
+
+def is_seysen(basis: np.ndarray[int]) -> bool:
+    """Checks if the lattice basis is Seysen-reduced.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+
+    Returns:
+        bool: True if the basis is Seysen-reduced, False otherwise.
+    """
+    n, m = basis.shape
+
+    lib.isSeysen.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.isSeysen.restype = ctypes.c_bool
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.isSeysen(basis_ptr, n, m)
