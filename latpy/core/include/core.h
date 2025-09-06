@@ -99,6 +99,18 @@ extern "C"
      * @return false if lattice basis is not size-reduced
      */
     bool isSize(long **basis_ptr, const long n, const long m);
+
+    /**
+     * @brief Checks if lattice basis is weakly-LLL-reduced, that is, satisfies Lovasz condition or not
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter
+     * @param n rank of lattice
+     * @param m null of lattice
+     * @return true if lattice basis is weakly-LLL-reduced
+     * @return false if lattice basis is weakly-LLL-reduced
+     */
+    bool isWeaklyLLL(long **basis_ptr, const double delta, const long n, const long m);
 }
 
 #endif // !LAT_PY_H
