@@ -59,4 +59,4 @@ print(C.size(0.5))
 print(C.lll())
 ```
 
-If the above code behaves with no problem, it seems that LatPy was correctly Installed.
+If the above code behaves with no problem, it seems that LatPy was correctly installed.
