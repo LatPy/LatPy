@@ -6,6 +6,7 @@ ext_modules = [
         sources=[
             "latpy/core/src/globals.cpp",
             "latpy/core/src/compute_gso.cpp",
+            "latpy/core/src/compute_r.cpp",
             "latpy/core/src/volume.cpp",
             "latpy/core/src/sl.cpp",
             "latpy/core/src/pot.cpp",
@@ -13,7 +14,8 @@ ext_modules = [
             "latpy/core/src/rhf.cpp",
             "latpy/core/src/od.cpp",
             "latpy/core/src/is_size.cpp",
-            "latpy/core/src/is_weakly_lll.cpp"
+            "latpy/core/src/is_weakly_lll.cpp",
+            "latpy/core/src/is_seysen.cpp"
         ],
         language="c++",
         extra_compile_args=[
@@ -40,6 +42,7 @@ ext_modules = [
             "latpy/reduction/src/globals.cpp",
             "latpy/reduction/src/compute_gso.cpp",
             "latpy/reduction/src/compute_cf.cpp",
+            "latpy/reduction/src/compute_r.cpp",
             "latpy/reduction/src/deep_insertion.cpp",
             "latpy/reduction/src/rhf.cpp",
             "latpy/reduction/src/sl.cpp",
@@ -53,7 +56,9 @@ ext_modules = [
             "latpy/svp/src/globals.cpp",
             "latpy/svp/src/coeff_pruning.cpp",
             "latpy/svp/src/enum_sv.cpp",
-            "latpy/reduction/src/bkz.cpp"
+            "latpy/reduction/src/bkz.cpp",
+            "latpy/reduction/src/seysen.cpp",
+            "latpy/reduction/src/seysen_unimodular.cpp"
         ],
         language="c++",
         extra_compile_args=[

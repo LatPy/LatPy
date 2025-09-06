@@ -24,6 +24,13 @@ extern NTL::ZZ volume;
 void computeGSO(MatrixXli basis_);
 
 /**
+ * @brief Compute R-factor of the input lattice
+ *
+ * @param basis_ lattice basis
+ */
+void computeR(MatrixXli basis_);
+
+/**
  * @brief compiutes CF-information of the lattice
  *
  * @param n rank of lattice
@@ -73,6 +80,15 @@ void updateSwapGSO(const long k, const long n);
 void updateDeepInsertionGSO(const long i, const long k, const long n);
 
 /**
+ * @brief
+ *
+ * @param R
+ * @param n
+ * @param m
+ */
+MatrixXli seysenUnimodular(const MatrixXld R_, const long n, const long m);
+
+/**
  * @brief Applies LLL-reduction
  *
  * @param delta reduction parameter
@@ -100,6 +116,15 @@ extern "C"
      * @param m null of lattice
      */
     void size(long **basis_ptr, const double eta, const long n, const long m);
+
+    /**
+     * @brief Applies Seysen-reduction to inpute lattice basis
+     *
+     * @param basis_ptr lattice basisi matrix
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void seysen(long **basis_ptr, const long n, const long m);
 
     /**
      * @brief Applies LLL-reduction to lattice basis
