@@ -19,7 +19,6 @@ extern "C" void seysen(long **basis_ptr, const long n, const long m)
     }
 
     computeR(basis);
-    std::cout << R << std::endl;
     basis = seysenUnimodular(R, n, m) * basis;
 
     for (i = 0; i < n; ++i)
