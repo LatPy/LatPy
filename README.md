@@ -60,3 +60,27 @@ print(C.lll())
 ```
 
 If the above code behaves with no problem, it seems that LatPy was correctly installed.
+
+## Expected Trouble Shooting
+
+A eeror like the below occured:
+
+```bash
+error: subprocess-exited-with-error 
+× python setup.py bdist_wheel did not run successfully. 
+│ exit code: 1 
+╰─> See above for output. 
+
+note: This error originates from a subprocess, and is likely not a problem with pip. 
+ Building wheel for latpy (setup.py) ... error 
+ ERROR: Failed building wheel for latpy 
+ Running setup.py clean for latpy 
+Failed to build latpy 
+ERROR: ERROR: Failed to build installable wheels for some pyproject.toml based projects (latpy)
+```
+
+It seems that you did not install c++ libraries. Please install NTL library and Eigen library.
+
+## Disclaimer
+
+The all developers of LatPy are NOT responsible for any losses, damages, deficits, troubles or disadvantages that was caused by installing, cloning or using this python module, that is, LatPy.
