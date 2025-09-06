@@ -1,5 +1,7 @@
 # LatPy
 
+This is now developping yet. So this has some defects and algorithms that is not implemented.
+
 This python module, named LatPy, is a python module that provides many lattice algorithms for experiment, implementation, or analytics. For example, lattice reductions, solving lattice problems.
 
 ## How to Install
