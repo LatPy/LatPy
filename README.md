@@ -65,7 +65,7 @@ If the above code behaves with no problem, it seems that LatPy was correctly ins
 
 ## Expected Trouble Shooting
 
-A eeror like the below occured:
+If an eeror like the below occured:
 
 ```bash
 error: subprocess-exited-with-error 
@@ -81,7 +81,7 @@ Failed to build latpy
 ERROR: ERROR: Failed to build installable wheels for some pyproject.toml based projects (latpy)
 ```
 
-It seems that you did not install c++ libraries. Please install NTL library and Eigen library.
+then it seems that you did not install c++ libraries. Please install NTL library and Eigen library.
 
 ## Disclaimer
 

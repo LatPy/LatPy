@@ -168,8 +168,8 @@ def gh(basis: np.ndarray[int]) -> float:
     Returns:
         float: The Gaussian heuristic of the lattice basis.
     """
-    n, m = basis.shape
-    
+    n = basis.shape[0]
+
     return (math.gamma(n * 0.5 + 1) ** (1.0 / n)) / math.sqrt(math.pi)
 
 def od(basis: np.ndarray[int]) -> float:
