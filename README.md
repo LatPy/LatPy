@@ -21,10 +21,10 @@ If you finished installing these libraries, you are ready to install LatPy. You 
 
 ## Directly Install from Git Repository (Recommended)
 
-You can directly install LatPy with url of this git repository using the below command.
+You can directly install LatPy with url of this git repository using the below command. (Because install is expected to take a few long time, the below command includs ``-v`` option for never getting tired of waiting.)
 
 ```bash
-$ pip install git+https://github.com/LatPy/LatPy.git
+$ pip install git+https://github.com/LatPy/LatPy.git -v
 ```
 
 ## Clone And Install (Non-Recommended)
