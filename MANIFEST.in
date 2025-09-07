@@ -1,0 +1,1 @@
+recursive-include latpy/svp_challenge_list *.txt
