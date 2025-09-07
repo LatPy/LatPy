@@ -7,6 +7,7 @@ __all__ = [
     "size",
     "seysen",
     "lll",
+    "qr_lll",
     "deep_lll",
     "l2",
     "bkz"
