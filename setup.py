@@ -123,4 +123,8 @@ setup(
     packages=find_packages(),
     ext_modules=ext_modules,
     python_requires=">=3.8",
+    package_data={
+        "latpy": ["svp_challenge_list/*.txt"],
+    },
+    include_package_data=True
 )
