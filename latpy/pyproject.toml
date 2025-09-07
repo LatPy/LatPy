@@ -19,3 +19,6 @@ requires-python = ">=3.8"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["latpy*"]
+
+[tool.setuptools.package-data]
+"latpy" = ["svp_challenge_list/*.txt"]

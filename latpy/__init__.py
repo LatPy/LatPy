@@ -1,9 +1,10 @@
-from latpy.latpy import LatPy
+from latpy.latpy import LatPy, svp_challenge
 from .core import *
 from .reduction import *
 
 __all__ = [
     "lib", 
+    "svp_challenge",
     "compute_gso", 
     "gram_schmidt",
     "volume", 
