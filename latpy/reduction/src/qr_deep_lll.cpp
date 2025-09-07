@@ -8,16 +8,19 @@
 #include <NTL/ZZ.h>
 #include <NTL/mat_ZZ.h>
 
-extern "C" void qrLLL(
+void qrDeepLLL(
     long **basis_ptr,
     const double delta,
     const double eta,
+    const long gamma,
     const bool output_sl,
     const bool output_rhf,
     const long n,
     const long m)
 {
-    long i, j, k, q;
+    bool flag;
+    long q, i, j, k;
+    long double C;
     const double eta_hat = (eta + 0.5) * 0.5;
     FILE *log_sl, *log_rhf;
     NTL::mat_ZZ basis_ntl;
@@ -56,11 +59,11 @@ extern "C" void qrLLL(
         fprintf(log_rhf, "val\n");
     }
 
-    for (k = 1; k < basis.rows();)
+    for (k = 1; k < n;)
     {
         for (j = k - 1; j > -1; --j)
         {
-            if (fabsl(R.coeff(k, j)) > fabsl(eta_hat * R.coeff(j, j)))
+            if (fabsl(R.coeff(k, j)) > eta_hat * fabsl(R.coeff(j, j)))
             {
                 q = static_cast<long>(roundf(R.coeff(k, j) / R.coeff(j, j)));
                 basis.row(k) -= q * basis.row(j);
@@ -68,17 +71,41 @@ extern "C" void qrLLL(
             }
         }
 
-        if ((k > 0) and (R.coeff(k, k) * R.coeff(k, k) < delta * R.coeff(k - 1, k - 1) * R.coeff(k - 1, k - 1) - R.coeff(k, k - 1) * R.coeff(k, k - 1)))
+        flag = false;
+        C = basis.row(k).squaredNorm();
+        for (i = 0; i < k;)
         {
-            basis.row(k - 1).swap(basis.row(k));
-            updateSwapR(k, n);
+            if (C < delta * R.coeff(i, i) * R.coeff(i, i))
+            {
+                if ((i <= gamma) and (k - i + 1 <= gamma))
+                {
+                    flag = true;
+                }
+            }
 
-            --k;
+            if (not flag)
+            {
+                C -= R.coeff(k, i) * R.coeff(k, i);
+                ++i;
+            }
+            else
+            {
+                deepInsertion(i, k);
+
+                updateDeepInsertionR(i, k, n);
+
+                if (i >= 1)
+                {
+                    k = i - 1;
+                }
+                else
+                {
+                    k = 0;
+                }
+            }
         }
-        else
-        {
-            ++k;
-        }
+
+        ++k;
 
         if (output_sl)
         {
