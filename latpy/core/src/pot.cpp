@@ -2,12 +2,20 @@
 
 #include <iostream>
 #include <cmath>
+#include <string>
+#include <sstream>
 
 #include <eigen3/Eigen/Dense>
 
-extern "C" long double pot(long **basis_ptr, const long n, const long m)
+#include <NTL/RR.h>
+
+extern "C" char *pot(long **basis_ptr, const long n, const long m)
 {
     long i, j;
+    char *cstr;
+    std::string s;
+    std::stringstream ss;
+
     basis = MatrixXli::Zero(n, m);
     for (i = 0; i < n; ++i)
     {
@@ -18,10 +26,15 @@ extern "C" long double pot(long **basis_ptr, const long n, const long m)
     }
     computeGSO(basis, mu, B);
 
-    long double p = 1.0;
+    NTL::RR p = NTL::to_RR(1);
     for (i = 0; i < n; ++i)
     {
-        p *= powl(B.coeff(i), static_cast<long double>(n - i));
+        p *= NTL::pow(NTL::to_RR((double)B.coeff(i)), NTL::to_RR(n - i));
     }
-    return p;
+    ss << p;
+    s = ss.str();
+    cstr = new char[s.size() + 1];
+    std::copy(s.begin(), s.end(), cstr);
+    cstr[s.size()] = '\0';
+    return cstr;
 }

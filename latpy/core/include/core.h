@@ -61,7 +61,7 @@ extern "C"
      * @param m null of the lattice
      * @return long double
      */
-    long double pot(long **basis_ptr, const long n, const long m);
+    char *pot(long **basis_ptr, const long n, const long m);
 
     /**
      * @brief compute Hermite factor of the lattice basis

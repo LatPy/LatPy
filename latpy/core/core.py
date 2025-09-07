@@ -103,13 +103,13 @@ def pot(basis: np.ndarray[int]) -> float:
         ctypes.c_long,
         ctypes.c_long
     )
-    lib.pot.restype = ctypes.c_longdouble
+    lib.pot.restype = ctypes.c_char_p
 
     basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
     for i in range(n):
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
-    return lib.pot(basis_ptr, n, m)
+    return float(lib.pot(basis_ptr, n, m).decode("utf-8"))
 
 def hf(basis: np.ndarray[int]) -> float:
     """Computes Hermite-factor of the lattice basis.
