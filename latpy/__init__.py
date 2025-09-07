@@ -35,6 +35,7 @@ __all__ = [
     "lll",
     "qr_lll",
     "deep_lll",
+    "qr_deep_lll",
     "l2",
     "enum_sv",
     "bkz"

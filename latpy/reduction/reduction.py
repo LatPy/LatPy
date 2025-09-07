@@ -284,6 +284,65 @@ def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gam
     
     return reduced_basis, sl_log, rhf_log
 
+def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
+    """Performs QR-based Deep LLL reduction on a basis with given delta and eta parameters.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+        delta (float, optional): The delta parameter for QR-Deep LLL reduction. Defaults to 0.99.
+        eta (float, optional): The eta parameter for size reduction within QR-Deep LLL. Defaults to 0.55.
+        gamma (int, optional): The gamma parameter for QR-Deep LLL reduction. Defaults to 20.
+        output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+        output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+
+    Returns:
+        np.ndarray[int]: The QR-Deep LLL reduced basis.
+    """
+    if delta <= 0.25 or delta >= 1:
+        raise ValueError("Delta must be in the range (0.25, 1).")
+    if eta < 0.5 or eta > np.sqrt(delta):
+        raise ValueError("Eta must be in the range [0.5, sqrt(delta)].")
+    
+    n, m = basis.shape
+
+    lib.qrDeepLLL.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_double,
+        ctypes.c_double,
+        ctypes.c_long,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.qrDeepLLL.restype = None
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = (ctypes.c_long * m)()
+        for j in range(m):
+            basis_ptr[i][j] = ctypes.c_long(basis[i, j])
+
+    lib.qrDeepLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, n, m)
+
+    reduced_basis = np.zeros((n, m), dtype=np.int64)
+    for i in range(n):
+        for j in range(m):
+            reduced_basis[i, j] = basis_ptr[i][j]
+
+    sl_log = []
+    rhf_log = []
+    if output_sl_log:
+        if os.path.exists("sl_log.csv"):
+            sl_log = list(pd.read_csv("sl_log.csv")["val"])
+            os.remove("sl_log.csv")
+    if output_rhf_log:
+        if os.path.exists("rhf_log.csv"):
+            rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
+            os.remove("rhf_log.csv")
+
+    return reduced_basis, sl_log, rhf_log
+
 def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> np.ndarray[int]:
     """Performs L2 reduction on a basis with given delta and eta parameters.
 

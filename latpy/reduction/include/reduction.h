@@ -88,6 +88,15 @@ void updateSwapR(const long k, const long n);
 void updateDeepInsertionGSO(const long i, const long k, const long n);
 
 /**
+ * @brief Updates R-factor with applying deep-insetion \sigma_{i, k} to lattice basis
+ *
+ * @param i index
+ * @param k index
+ * @param n rank of lattice
+ */
+void updateDeepInsertionR(const long i, const long k, const long n);
+
+/**
  * @brief
  *
  * @param R
@@ -186,6 +195,28 @@ extern "C"
      * @param m null of lattice
      */
     void deepLLL(
+        long **basis_ptr,
+        const double delta,
+        const double eta,
+        const long gamma,
+        const bool output_sl,
+        const bool output_rhf,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies deepLLL-reduction to lattice basis with QR factorization
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter to Lovasz condition
+     * @param eta reduction parameter to size-reduction condition
+     * @param gamma depth of deep-reduction
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void qrDeepLLL(
         long **basis_ptr,
         const double delta,
         const double eta,

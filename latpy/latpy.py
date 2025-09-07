@@ -380,6 +380,22 @@ class LatPy:
         """
         return self.deep_lll(delta, eta, gamma, output_sl_log, output_rhf_log)
     
+    def qr_deep_lll(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+        """Perform QR-Deep LLL reduction on the lattice basis with given delta, eta, and gamma parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for QR-Deep LLL reduction. Defaults to 0.99.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            gamma (int, optional): The gamma parameter for QR-Deep LLL reduction. Defaults to 20.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log = reduction.qr_deep_lll(self.basis, delta, eta, gamma, output_sl_log, output_rhf_log)
+        return LatPy(reduced_basis), sl_log, rhf_log
+    
     def enum_sv(self, pruning: bool = False) -> np.ndarray[int]:
         """Enumerates the shortest vector in the lattice basis using the SVP algorithm.
 
