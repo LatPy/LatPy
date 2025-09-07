@@ -1,6 +1,6 @@
 import latpy
 
-C = latpy.svp_challenge(40, 1)
+C = latpy.svp_challenge(40, 9)
 print(C)
 print(C.compute_gso())
 print(C.volume())
