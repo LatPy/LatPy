@@ -1,9 +1,6 @@
 import latpy
-import numpy as np
 
-B = np.random.randint(100, 999, size=(50, 50), dtype=np.int64)
-
-C = latpy.LatPy(B)
+C = latpy.svp_challenge(40, 9)
 print(C)
 print(C.compute_gso())
 print(C.volume())

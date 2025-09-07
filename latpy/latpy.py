@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
+import importlib.resources as resources
 
 from . import core
 from . import reduction
@@ -34,7 +35,7 @@ class LatPy:
             str: A string representation of the LatPy object.
         """
         return f"{self.n}-dimensional lattice with basis:\n{self.basis}"
-
+    
     def compute_gso(self) -> tuple[np.ndarray[float], np.ndarray[float]]:
         """Compute the Gram-Schmidt orthogonalization of the lattice basis.
 
@@ -439,3 +440,13 @@ class LatPy:
             LatPy: The reduced basis.
         """
         return self.bkz(delta, beta, max_loops, pruning, output_sl_log, output_rhf_log)
+
+def svp_challenge(dim: int, seed: int) -> LatPy:
+    """Return the basis of the SVP challenge lattice.
+
+    Returns:
+        LatPy: The basis of the SVP challenge lattice.
+    """
+    with resources.files("latpy.svp_challenge_list").joinpath(f"svp_challenge_{dim}_{seed}.txt").open('r') as f:
+        basis = np.loadtxt(f, dtype=np.int64)[: dim, :dim]
+    return LatPy(basis)
