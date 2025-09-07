@@ -33,6 +33,7 @@ __all__ = [
     "size",
     "seysen",
     "lll",
+    "qr_lll",
     "deep_lll",
     "l2",
     "enum_sv",

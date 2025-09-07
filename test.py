@@ -1,7 +1,7 @@
 import latpy
 import numpy as np
 
-B = np.random.randint(100, 999, size=(10, 10), dtype=np.int64)
+B = np.random.randint(100, 999, size=(50, 50), dtype=np.int64)
 
 C = latpy.LatPy(B)
 print(C)
@@ -23,5 +23,5 @@ print(C.l2(eta=0.5))
 print(C.l2(eta=0.5)[0].is_lll(0.99))
 print(C.lll()[0].enum_sv(pruning=True))
 print(C.bkz(beta=50, pruning=True))
-print(C.seysen())
-print(C.seysen().is_seysen())
+print(C.qr_lll(eta=0.5))
+print(C.qr_lll(eta=0.5)[0].is_lll(0.99))

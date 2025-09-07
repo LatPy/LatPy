@@ -295,6 +295,21 @@ class LatPy:
         reduced_basis, sl_log, rhf_log = reduction.lll(self.basis, delta, eta, output_sl_log, output_rhf_log)
         return LatPy(reduced_basis), sl_log, rhf_log
     
+    def qr_lll(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
+        """Perform QR-LLL reduction on the lattice basis with given delta and eta parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for QR-LLL reduction. Defaults to 0.99.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log = reduction.qr_lll(self.basis, delta, eta, output_sl_log, output_rhf_log)
+        return LatPy(reduced_basis), sl_log, rhf_log
+    
     def l3(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[LatPy, list[float], list[float]]:
         """Alias for lll method.
 
