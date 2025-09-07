@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <eigen3/Eigen/Dense>
 
@@ -15,6 +16,15 @@ extern MatrixXli basis;
 extern MatrixXld mu;
 extern MatrixXld R;
 extern NTL::ZZ volume;
+
+/**
+ * @brief 
+ * 
+ * @param j 
+ * @param visited 
+ * @return long double 
+ */
+long double diagR(const long i, const long j, std::vector<std::vector<bool>> visited);
 
 /**
  * @brief Compute GSO-informations of the input lattice

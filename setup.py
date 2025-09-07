@@ -40,6 +40,7 @@ ext_modules = [
         "latpy.reduction._reduction",
         sources=[
             "latpy/reduction/src/globals.cpp",
+            "latpy/reduction/src/diag_r.cpp",
             "latpy/reduction/src/compute_gso.cpp",
             "latpy/reduction/src/compute_cf.cpp",
             "latpy/reduction/src/compute_r.cpp",

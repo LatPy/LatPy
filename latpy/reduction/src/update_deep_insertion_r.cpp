@@ -15,7 +15,7 @@ void updateDeepInsertionR(const long i, const long k, const long n)
 
     D.coeffRef(k) = R.coeff(k, k) * R.coeff(k, k);
     P.coeffRef(k) = R.coeff(k, k);
-    for (long j = k - 1; j >= 0; --j)
+    for (long j = k - 1; j >= i; --j)
     {
         P.coeffRef(j) = R.coeff(k, j);
         D.coeffRef(j) = D.coeff(j + 1) + R.coeff(k, j) * R.coeff(k, j);
@@ -24,7 +24,7 @@ void updateDeepInsertionR(const long i, const long k, const long n)
     // dianonal elements
     for (j = k; j > i; --j)
     {
-        G.coeffRef(j) = (G.coeff(j - 1) * sqrtl(D.coeff(j)) / D.coeff(j - 1));
+        G.coeffRef(j) = G.coeff(j - 1) * sqrtl(D.coeff(j) / D.coeff(j - 1));
     }
     G.coeffRef(i) = sqrtl(D.coeff(i));
 
