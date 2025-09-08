@@ -172,3 +172,61 @@ void deepLLL(
         fclose(err);
     }
 }
+
+void deepLLL(const double delta, const long gamma, const long end, const long h, const long n)
+{
+    bool flag;
+    long i, j, k, q;
+    long double C;
+
+    for (k = h; k < end;)
+    {
+        for (j = k - 1; j >= 0; --j)
+        {
+            if (fabsl(mu.coeff(k, j)) > 0.5)
+            {
+                q = std::lroundl(mu.coeff(k, j));
+                basis.row(k) -= q * basis.row(j);
+
+                for (i = 0; i <= j; ++i)
+                {
+                    mu.coeffRef(k, i) -= mu.coeff(j, i) * static_cast<long double>(q);
+                }
+            }
+        }
+
+        flag = false;
+        C = static_cast<long double>(basis.row(k).squaredNorm());
+        for (i = 0; i < k;)
+        {
+            if (C < delta * B.coeff(i))
+            {
+                if ((i <= gamma) and (k - i + 1 <= gamma))
+                {
+                    flag = true;
+                }
+            }
+
+            if (not flag)
+            {
+                C -= mu.coeff(k, i) * mu.coeff(k, i) * B.coeff(i);
+                ++i;
+            }
+            else
+            {
+                deepInsertion(i, k);
+                updateDeepInsertionGSO(i, k, n);
+
+                if (i >= 1)
+                {
+                    k = i - 1;
+                }
+                else
+                {
+                    k = 0;
+                }
+            }
+        }
+        ++k;
+    }
+}

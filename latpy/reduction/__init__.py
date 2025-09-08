@@ -13,5 +13,6 @@ __all__ = [
     "deep_l2",
     "l2",
     "pot_lll",
-    "bkz"
+    "bkz",
+    "deep_bkz"
 ]
