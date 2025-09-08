@@ -256,3 +256,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# for reserches or experiments
+lab/
