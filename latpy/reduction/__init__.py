@@ -10,6 +10,7 @@ __all__ = [
     "qr_lll",
     "deep_lll",
     "qr_deep_lll",
+    "deep_l2",
     "l2",
     "bkz"
 ]

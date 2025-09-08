@@ -18,11 +18,11 @@ extern MatrixXld R;
 extern NTL::ZZ volume;
 
 /**
- * @brief 
- * 
- * @param j 
- * @param visited 
- * @return long double 
+ * @brief
+ *
+ * @param j
+ * @param visited
+ * @return long double
  */
 long double diagR(const long i, const long j, std::vector<std::vector<bool>> visited);
 
@@ -39,6 +39,16 @@ void computeGSO(MatrixXli basis_);
  * @param basis_ lattice basis
  */
 void computeR(MatrixXli basis_);
+
+/**
+ * @brief 
+ * 
+ * @param k 
+ * @param Q 
+ * @param B_star 
+ * @param s 
+ */
+void blockQR(const long k, const bool is_shifted, MatrixXld& Q, MatrixXld& B_star);
 
 /**
  * @brief compiutes CF-information of the lattice
@@ -251,6 +261,28 @@ extern "C"
         long **basis_ptr,
         const double delta,
         const double eta,
+        const bool output_sl,
+        const bool output_rhf,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies DeepLLL-reduction to lattice basis with L2-like algorithm
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter for deep-exchange condition
+     * @param eta reduction parameter for size-reduction condition
+     * @param gamma depth
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void deepL2(
+        long **basis_ptr,
+        const double delta,
+        const double eta,
+        const long gamma,
         const bool output_sl,
         const bool output_rhf,
         const long n,
