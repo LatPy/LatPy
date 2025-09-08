@@ -327,12 +327,12 @@ class LatPy:
         """
         return LatPy(reduction.seysen(self.basis))
     
-    def lll(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform LLL reduction on the lattice basis with given delta and eta parameters.
 
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
 
         Returns:
             LatPy: The reduced basis.
@@ -340,12 +340,12 @@ class LatPy:
         reduced_basis, sl_log, rhf_log, err = reduction.lll(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
         return LatPy(reduced_basis), sl_log, rhf_log, err
 
-    def qr_lll(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def qr_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform QR-LLL reduction on the lattice basis with given delta and eta parameters.
 
         Args:
             delta (float, optional): The delta parameter for QR-LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
 
@@ -355,24 +355,24 @@ class LatPy:
         reduced_basis, sl_log, rhf_log, err = reduction.qr_lll(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
         return LatPy(reduced_basis), sl_log, rhf_log, err
 
-    def l3(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def l3(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for lll method.
 
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
 
         Returns:
             LatPy: The reduced basis.
         """
         return self.lll(delta, eta, output_sl_log, output_rhf_log, output_err)
 
-    def lenstra_lenstra_lovasz(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def lenstra_lenstra_lovasz(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for lll method.
 
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
 
         Returns:
             LatPy: The reduced basis.
@@ -394,12 +394,12 @@ class LatPy:
         reduced_basis, sl_log, rhf_log, err = reduction.l2(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
         return LatPy(reduced_basis), sl_log, rhf_log, err
 
-    def deep_lll(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def deep_lll(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform Deep LLL reduction on the lattice basis with given delta, eta, and gamma parameters.
 
         Args:
             delta (float, optional): The delta parameter for Deep LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             gamma (int, optional): The gamma parameter for Deep LLL reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
@@ -441,12 +441,12 @@ class LatPy:
         """
         return self.deep_l2(delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
 
-    def lll_with_deep_insertions(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def lll_with_deep_insertions(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for deep_lll method.
 
         Args:
             delta (float, optional): The delta parameter for Deep LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             gamma (int, optional): The gamma parameter for Deep LLL reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
@@ -456,12 +456,12 @@ class LatPy:
         """
         return self.deep_lll(delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
 
-    def qr_deep_lll(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float]]:
+    def qr_deep_lll(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float]]:
         """Perform QR-Deep LLL reduction on the lattice basis with given delta, eta, and gamma parameters.
 
         Args:
             delta (float, optional): The delta parameter for QR-Deep LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             gamma (int, optional): The gamma parameter for QR-Deep LLL reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
@@ -472,6 +472,35 @@ class LatPy:
         reduced_basis, sl_log, rhf_log, err = reduction.qr_deep_lll(self.basis, delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
         return LatPy(reduced_basis), sl_log, rhf_log, err
 
+    def pot_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+        """Perform Potential LLL reduction on the lattice basis with given delta and eta parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for Potential LLL reduction. Defaults to 0.99.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log, err = reduction.pot_lll(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
+        return LatPy(reduced_basis), sl_log, rhf_log, err
+    
+    def potential_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+        """Alias for pot_lll method.
+
+        Args:
+            delta (float, optional): The delta parameter for Potential LLL reduction. Defaults to 0.99.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        return self.pot_lll(delta, eta, output_sl_log, output_rhf_log, output_err)
+    
     def enum_sv(self, pruning: bool = False) -> np.ndarray[int]:
         """Enumerates the shortest vector in the lattice basis using the SVP algorithm.
 

@@ -41,14 +41,14 @@ void computeGSO(MatrixXli basis_);
 void computeR(MatrixXli basis_);
 
 /**
- * @brief 
- * 
- * @param k 
- * @param Q 
- * @param B_star 
- * @param s 
+ * @brief
+ *
+ * @param k
+ * @param Q
+ * @param B_star
+ * @param s
  */
-void blockQR(const long k, const bool is_shifted, MatrixXld& Q, MatrixXld& B_star);
+void blockQR(const long k, const bool is_shifted, MatrixXld &Q, MatrixXld &B_star);
 
 /**
  * @brief compiutes CF-information of the lattice
@@ -288,6 +288,16 @@ extern "C"
         const double delta,
         const double eta,
         const long gamma,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
+
+    void potLLL(
+        long **basis_ptr,
+        const double delta,
+        const double eta,
         const bool output_sl,
         const bool output_rhf,
         const bool output_err,
