@@ -67,8 +67,23 @@ extern "C" void BKZ(
             }
         }
         ++k;
-        l = std::min(k + beta - 1, n);
-        h = std::min(l + 1, n);
+
+        if (n < k + beta)
+        {
+            l = n;
+        }
+        else
+        {
+            l = k + beta - 1;
+        }
+        if (l < n)
+        {
+            h = l + 1;
+        }
+        else
+        {
+            h = n;
+        }
         d = l - k + 1;
 
         radius = delta * B.coeff(k - 1);
