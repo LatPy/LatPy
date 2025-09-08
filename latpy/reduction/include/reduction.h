@@ -180,6 +180,7 @@ extern "C"
         const double eta,
         const bool output_sl,
         const bool output_rhf,
+        const bool output_err,
         const long n,
         const long m);
 
@@ -200,6 +201,7 @@ extern "C"
         const double eta,
         const bool output_sl,
         const bool output_rhf,
+        const bool output_err,
         const long n,
         const long m);
 
@@ -221,6 +223,7 @@ extern "C"
         const long gamma,
         const bool output_sl,
         const bool output_rhf,
+        const bool output_err,
         const long n,
         const long m);
 
@@ -243,6 +246,7 @@ extern "C"
         const long gamma,
         const bool output_sl,
         const bool output_rhf,
+        const bool output_err,
         const long n,
         const long m);
 
@@ -263,6 +267,7 @@ extern "C"
         const double eta,
         const bool output_sl,
         const bool output_rhf,
+        const bool output_err,
         const long n,
         const long m);
 
@@ -285,6 +290,7 @@ extern "C"
         const long gamma,
         const bool output_sl,
         const bool output_rhf,
+        const bool output_err,
         const long n,
         const long m);
 
@@ -308,6 +314,7 @@ extern "C"
         const bool pruning,
         const bool output_sl,
         const bool output_rhf,
+        const bool output_err,
         const long n,
         const long m);
 }

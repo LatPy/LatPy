@@ -111,7 +111,7 @@ def seysen(basis: np.ndarray[int]) -> np.ndarray[int]:
 
     return reduced_basis
 
-def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
+def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs LLL reduction on a basis with given delta and eta parameters.
 
     Args:
@@ -137,6 +137,7 @@ def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_s
         ctypes.c_double,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_bool,
         ctypes.c_long,
         ctypes.c_long
     )
@@ -148,7 +149,7 @@ def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_s
         for j in range(m):
             basis_ptr[i][j] = ctypes.c_long(basis[i, j])
 
-    lib.LLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), output_sl_log, output_rhf_log, n, m)
+    lib.LLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), output_sl_log, output_rhf_log, output_err, n, m)
 
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
@@ -157,6 +158,7 @@ def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_s
 
     sl_log = []
     rhf_log = []
+    err = 0
     if output_sl_log:
         if os.path.exists("sl_log.csv"):
             sl_log = list(pd.read_csv("sl_log.csv")["val"])
@@ -165,10 +167,13 @@ def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_s
         if os.path.exists("rhf_log.csv"):
             rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
             os.remove("rhf_log.csv")
-    
-    return reduced_basis, sl_log, rhf_log
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
 
-def qr_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
+    return reduced_basis, sl_log, rhf_log, err
+
+def qr_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs QR-based LLL reduction on a basis with given delta and eta parameters.
 
     Args:
@@ -194,6 +199,7 @@ def qr_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, outpu
         ctypes.c_double,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_bool,
         ctypes.c_long,
         ctypes.c_long
     )
@@ -205,7 +211,7 @@ def qr_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, outpu
         for j in range(m):
             basis_ptr[i][j] = ctypes.c_long(basis[i, j])
 
-    lib.qrLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), output_sl_log, output_rhf_log, n, m)
+    lib.qrLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), output_sl_log, output_rhf_log, output_err, n, m)
 
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
@@ -214,6 +220,7 @@ def qr_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, outpu
 
     sl_log = []
     rhf_log = []
+    err = 0
     if output_sl_log:
         if os.path.exists("sl_log.csv"):
             sl_log = list(pd.read_csv("sl_log.csv")["val"])
@@ -222,10 +229,13 @@ def qr_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, outpu
         if os.path.exists("rhf_log.csv"):
             rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
             os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
 
-    return reduced_basis, sl_log, rhf_log
+    return reduced_basis, sl_log, rhf_log, err
 
-def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
+def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs Deep LLL reduction on a basis with given delta and eta parameters.
 
     Args:
@@ -253,6 +263,7 @@ def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gam
         ctypes.c_long,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_bool,
         ctypes.c_long,
         ctypes.c_long
     )
@@ -264,7 +275,7 @@ def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gam
         for j in range(m):
             basis_ptr[i][j] = ctypes.c_long(basis[i, j])
 
-    lib.deepLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, n, m)
+    lib.deepLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, output_err, n, m)
 
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
@@ -273,6 +284,7 @@ def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gam
 
     sl_log = []
     rhf_log = []
+    err = 0
     if output_sl_log:
         if os.path.exists("sl_log.csv"):
             sl_log = list(pd.read_csv("sl_log.csv")["val"])
@@ -281,10 +293,13 @@ def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gam
         if os.path.exists("rhf_log.csv"):
             rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
             os.remove("rhf_log.csv")
-    
-    return reduced_basis, sl_log, rhf_log
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
 
-def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
+    return reduced_basis, sl_log, rhf_log, err
+
+def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs QR-based Deep LLL reduction on a basis with given delta and eta parameters.
 
     Args:
@@ -312,6 +327,7 @@ def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, 
         ctypes.c_long,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_bool,
         ctypes.c_long,
         ctypes.c_long
     )
@@ -323,7 +339,7 @@ def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, 
         for j in range(m):
             basis_ptr[i][j] = ctypes.c_long(basis[i, j])
 
-    lib.qrDeepLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, n, m)
+    lib.qrDeepLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, output_err, n, m)
 
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
@@ -332,6 +348,7 @@ def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, 
 
     sl_log = []
     rhf_log = []
+    err = 0
     if output_sl_log:
         if os.path.exists("sl_log.csv"):
             sl_log = list(pd.read_csv("sl_log.csv")["val"])
@@ -340,10 +357,13 @@ def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, 
         if os.path.exists("rhf_log.csv"):
             rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
             os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
 
-    return reduced_basis, sl_log, rhf_log
+    return reduced_basis, sl_log, rhf_log, err
 
-def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False) -> np.ndarray[int]:
+def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs L2 reduction on a basis with given delta and eta parameters.
 
     Args:
@@ -369,6 +389,7 @@ def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl
         ctypes.c_double,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_bool,
         ctypes.c_long,
         ctypes.c_long
     )
@@ -380,7 +401,7 @@ def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl
         for j in range(m):
             basis_ptr[i][j] = ctypes.c_long(basis[i, j])
 
-    lib.L2(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), output_sl_log, output_rhf_log, n, m)
+    lib.L2(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), output_sl_log, output_rhf_log, output_err, n, m)
 
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
@@ -389,6 +410,7 @@ def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl
 
     sl_log = []
     rhf_log = []
+    err = 0
     if output_sl_log:
         if os.path.exists("sl_log.csv"):
             sl_log = list(pd.read_csv("sl_log.csv")["val"])
@@ -397,10 +419,13 @@ def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl
         if os.path.exists("rhf_log.csv"):
             rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
             os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
 
-    return reduced_basis, sl_log, rhf_log
+    return reduced_basis, sl_log, rhf_log, err
 
-def deep_l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False) -> np.ndarray[int]:
+def deep_l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs Deep L2 reduction on a basis with given delta and eta parameters.
 
     Args:
@@ -428,6 +453,7 @@ def deep_l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamm
         ctypes.c_long,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_bool,
         ctypes.c_long,
         ctypes.c_long
     )
@@ -439,7 +465,7 @@ def deep_l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamm
         for j in range(m):
             basis_ptr[i][j] = ctypes.c_long(basis[i, j])
 
-    lib.deepL2(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, n, m)
+    lib.deepL2(basis_ptr, ctypes.c_double(delta), ctypes.c_double(eta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, output_err, n, m)
 
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
@@ -448,6 +474,7 @@ def deep_l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamm
 
     sl_log = []
     rhf_log = []
+    err = 0
     if output_sl_log:
         if os.path.exists("sl_log.csv"):
             sl_log = list(pd.read_csv("sl_log.csv")["val"])
@@ -456,10 +483,13 @@ def deep_l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamm
         if os.path.exists("rhf_log.csv"):
             rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
             os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
 
-    return reduced_basis, sl_log, rhf_log
+    return reduced_basis, sl_log, rhf_log, err
 
-def bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False) -> tuple[np.ndarray[int], list[float], list[float]]:
+def bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs BKZ reduction on a basis with given delta and beta parameters.
 
     Args:
@@ -491,6 +521,7 @@ def bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: 
         ctypes.c_bool,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_bool,
         ctypes.c_long,
         ctypes.c_long
     )
@@ -502,7 +533,7 @@ def bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: 
         for j in range(m):
             basis_ptr[i][j] = ctypes.c_long(basis[i, j])
 
-    lib.BKZ(basis_ptr, ctypes.c_double(delta), ctypes.c_long(beta), ctypes.c_long(max_loops), ctypes.c_bool(pruning), ctypes.c_bool(output_sl_log), ctypes.c_bool(output_rhf_log), n, m)
+    lib.BKZ(basis_ptr, ctypes.c_double(delta), ctypes.c_long(beta), ctypes.c_long(max_loops), ctypes.c_bool(pruning), ctypes.c_bool(output_sl_log), ctypes.c_bool(output_rhf_log), ctypes.c_bool(output_err), n, m)
 
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
@@ -511,6 +542,7 @@ def bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: 
 
     sl_log = []
     rhf_log = []
+    err = 0
     if output_sl_log:
         if os.path.exists("sl_log.csv"):
             sl_log = list(pd.read_csv("sl_log.csv")["val"])
@@ -519,5 +551,8 @@ def bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: 
         if os.path.exists("rhf_log.csv"):
             rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
             os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
 
-    return reduced_basis, sl_log, rhf_log
+    return reduced_basis, sl_log, rhf_log, err
