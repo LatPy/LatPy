@@ -240,6 +240,50 @@ class LatPy:
         """
         return self.is_lll(delta)
     
+    def is_weakly_deep_lll(self, delta: float = 0.99) -> bool:
+        """Check if the basis is weakly DeepLLL reduced with given delta and gamma parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for DeepLLL reduction. Defaults to 0.99.
+
+        Returns:
+            bool: True if the basis is weakly DeepLLL reduced, False otherwise.
+        """
+        return core.is_weakly_deep_lll(self.basis, delta)
+    
+    def is_weakly_deep_lll_reduced(self, delta: float = 0.99) -> bool:
+        """Alias for is_weakly_deep_lll method.
+
+        Args:
+            delta (float, optional): The delta parameter for DeepLLL reduction. Defaults to 0.99.
+
+        Returns:
+            bool: True if the basis is weakly DeepLLL reduced, False otherwise.
+        """
+        return self.is_weakly_deep_lll(delta)
+    
+    def is_deep_lll(self, delta: float = 0.99) -> bool:
+        """Check if the basis is DeepLLL reduced with given delta and gamma parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for DeepLLL reduction. Defaults to 0.99.
+
+        Returns:
+            bool: True if the basis is DeepLLL reduced, False otherwise.
+        """
+        return self.is_size() and self.is_weakly_deep_lll(delta)
+    
+    def is_deep_lll_reduced(self, delta: float = 0.99) -> bool:
+        """Alias for is_deep_lll method.
+
+        Args:
+            delta (float, optional): The delta parameter for DeepLLL reduction. Defaults to 0.99.
+
+        Returns:
+            bool: True if the basis is DeepLLL reduced, False otherwise.
+        """
+        return self.is_deep_lll(delta)
+    
     def lagrange(self) -> LatPy:
         """Perform Lagrange reduction on the lattice basis.
 
