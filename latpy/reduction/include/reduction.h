@@ -117,6 +117,18 @@ void updateDeepInsertionGSO(const long i, const long k, const long n);
 void updateDeepInsertionR(const long i, const long k, const long n);
 
 /**
+ * @brief enumerate delta-anomolous vector
+ * 
+ * @param coeff coefficient vector
+ * @param delta reduction paramerter
+ * @param start star index
+ * @param end end index
+ * @return true 
+ * @return false 
+ */
+bool potENUM(VectorXli &coeff, const double delta, const long start, const long end);
+
+/**
  * @brief
  *
  * @param R
@@ -143,6 +155,14 @@ void LLL(const double delta, const long end, const long n);
  * @param n rank of lattice
  */
 void deepLLL(const double delta, const long gamma, const long end, const long h, const long n);
+
+/**
+ * @brief Applies PotLLL-reduction
+ *
+ * @param delta reduction parameter
+ * @param n rank of lattice
+ */
+void potLLL(const double delta, const long n);
 
 extern "C"
 {
@@ -361,6 +381,30 @@ extern "C"
         const long gamma,
         const long max_loops,
         const bool pruning,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies PotBKZ to lattice basis
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter
+     * @param beta blocksize
+     * @param max_loops maximam loop-times
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param output_err outpur error or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void potBKZ(
+        long **basis_ptr,
+        const double delta,
+        const long beta,
+        const long max_loops,
         const bool output_sl,
         const bool output_rhf,
         const bool output_err,

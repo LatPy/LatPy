@@ -11,18 +11,21 @@
 #include <NTL/mat_RR.h>
 #include <NTL/LLL.h>
 
-extern "C" void potLLL(
+void potBKZ(
     long **basis_ptr,
     const double delta,
-    const double eta,
+    const long beta,
+    const long max_loops,
     const bool output_sl,
     const bool output_rhf,
     const bool output_err,
     const long n,
     const long m)
 {
-    long i, j, k, q, l;
-    long double P, P_min, S;
+    long i, j, k, l, z, d;
+    long n_tour = 0;
+    VectorXli v, w;
+    VectorXld logB(n);
     FILE *log_sl, *log_rhf, *err;
     MatrixXld err_mat = MatrixXld::Zero(n, n);
     NTL::mat_ZZ basis_ntl;
@@ -68,40 +71,76 @@ extern "C" void potLLL(
         fprintf(err, "val\n");
     }
 
-    for (l = 0; l < n;)
+    for (z = j = 0; z < n - 1;)
     {
-        for (j = l - 1; j > -1; --j)
+        if (j == n - 2)
         {
-            if (fabsl(mu.coeff(l, j)) > 0.5)
+            j = 0;
+            if (max_loops > -1)
             {
-                q = std::lroundl(mu.coeff(l, j));
-                basis.row(l) -= q * basis.row(j);
-                mu.row(l).head(j + 1) -= static_cast<long double>(q) * mu.row(j).head(j + 1);
+                ++n_tour;
+                if (n_tour >= max_loops)
+                {
+                    break;
+                }
             }
         }
+        ++j;
 
-        P = P_min = 1.0;
-        k = 0;
-        for (j = l - 1; j >= 0; --j)
+        if (j + beta < n)
         {
-            S = (mu.row(l).segment(j, l - j).array().square() * B.segment(j, l - j).array()).sum();
-            P *= (B.coeff(l) + S) / B.coeff(j);
-            if (P < P_min)
-            {
-                k = j;
-                P_min = P;
-            }
-        }
-
-        if (delta > P_min)
-        {
-            deepInsertion(k, l);
-            updateDeepInsertionGSO(k, l, n);
-            l = k;
+            k = j + beta - 1;
         }
         else
         {
-            ++l;
+            k = n - 1;
+        }
+
+        d = k - j + 1;
+
+        if (potENUM(v, delta, j, k + 1))
+        {
+            z = 0;
+
+            w = v * basis.block(j, 0, d, m);
+
+            basis_ntl.SetDims(n + 1, m);
+            for (l = 0; l < m; ++l)
+            {
+                for (i = 0; i < j; ++i)
+                {
+                    basis_ntl[i][l] = NTL::to_ZZ(basis.coeffRef(i, l));
+                }
+                basis_ntl[j][l] = NTL::to_ZZ(w[l]);
+                for (i = j + 1; i < n + 1; ++i)
+                {
+                    basis_ntl[i][l] = NTL::to_ZZ(basis.coeffRef(i - 1, l));
+                }
+            }
+            NTL::LLL_FP(basis_ntl, 0.99);
+            for (i = 0; i < n; ++i)
+            {
+                for (l = 0; l < m; ++l)
+                {
+                    basis.coeffRef(i, l) = NTL::to_long(basis_ntl[i + 1][l]);
+                }
+            }
+
+            computeGSO(basis);
+            potLLL(delta, n);
+        }
+        else
+        {
+            ++z;
+        }
+
+        if (output_sl)
+        {
+            fprintf(log_sl, "%Lf\n", sl(n));
+        }
+        if (output_rhf)
+        {
+            fprintf(log_rhf, "%Lf\n", rhf(n));
         }
     }
 
@@ -144,48 +183,5 @@ extern "C" void potLLL(
     if (output_err)
     {
         fclose(err);
-    }
-}
-
-void potLLL(const double delta, const long n)
-{
-    long i, j, k, q, l;
-    long double P, P_min, S;
-
-    for (l = 0; l < n;)
-    {
-        for (j = l - 1; j > -1; --j)
-        {
-            if (fabsl(mu.coeff(l, j)) > 0.5)
-            {
-                q = std::lroundl(mu.coeff(l, j));
-                basis.row(l) -= q * basis.row(j);
-                mu.row(l).head(j + 1) -= static_cast<long double>(q) * mu.row(j).head(j + 1);
-            }
-        }
-
-        P = P_min = 1.0;
-        k = 0;
-        for (j = l - 1; j >= 0; --j)
-        {
-            S = (mu.row(l).segment(j, l - j).array().square() * B.segment(j, l - j).array()).sum();
-            P *= (B.coeff(l) + S) / B.coeff(j);
-            if (P < P_min)
-            {
-                k = j;
-                P_min = P;
-            }
-        }
-
-        if (delta > P_min)
-        {
-            deepInsertion(k, l);
-            updateDeepInsertionGSO(k, l, n);
-            l = k;
-        }
-        else
-        {
-            ++l;
-        }
     }
 }
