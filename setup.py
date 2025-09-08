@@ -66,7 +66,8 @@ ext_modules = [
             "latpy/reduction/src/seysen_unimodular.cpp",
             "latpy/reduction/src/qr_lll.cpp",
             "latpy/reduction/src/qr_deep_lll.cpp",
-            "latpy/reduction/src/deep_l2.cpp"
+            "latpy/reduction/src/deep_l2.cpp",
+            "latpy/reduction/src/pot_lll.cpp",
         ],
         language="c++",
         extra_compile_args=[

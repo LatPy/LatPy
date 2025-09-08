@@ -43,6 +43,8 @@ __all__ = [
     "qr_deep_lll",
     "l2",
     "deep_l2",
+    "pot_lll",
+    "potential_lll",
     "enum_sv",
     "bkz"
 ]
