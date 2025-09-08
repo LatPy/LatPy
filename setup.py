@@ -15,7 +15,8 @@ ext_modules = [
             "latpy/core/src/od.cpp",
             "latpy/core/src/is_size.cpp",
             "latpy/core/src/is_weakly_lll.cpp",
-            "latpy/core/src/is_seysen.cpp"
+            "latpy/core/src/is_seysen.cpp",
+            "latpy/core/src/is_weakly_deep_lll.cpp"
         ],
         language="c++",
         extra_compile_args=[

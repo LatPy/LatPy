@@ -123,9 +123,21 @@ extern "C"
      * @param n rank of lattice
      * @param m null of lattice
      * @return true if lattice basis is weakly-LLL-reduced
-     * @return false if lattice basis is weakly-LLL-reduced
+     * @return false if lattice basis is not weakly-LLL-reduced
      */
     bool isWeaklyLLL(long **basis_ptr, const double delta, const long n, const long m);
+
+    /**
+     * @brief Checks if lattice basis is weakly-DeepLLL-reduced, that is, satisfies deep-exchange condition or not
+     * 
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter
+     * @param n rank of lattice
+     * @param m null of lattice
+     * @return true if lattice basis is weakly-Deep-LLL-reduced
+     * @return false if lattice basis is not weakly-Deep-LLL-reduced
+     */
+    bool isWeaklyDeepLLL(long **basis_ptr, const double delta, const long n, const long m);
 }
 
 #endif // !LAT_PY_H

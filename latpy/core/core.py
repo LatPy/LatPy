@@ -272,3 +272,34 @@ def is_seysen(basis: np.ndarray[int]) -> bool:
         basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
 
     return lib.isSeysen(basis_ptr, n, m)
+
+def is_weakly_deep_lll(basis: np.ndarray[int], delta: float) -> bool:
+    """Checks if the lattice basis is weakly DeepLLL-reduced, that is, satisfies deep-exchange condition with given delta parameters.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+        delta (float): The delta parameter for the DeepLLL condition.
+        eta (float): The eta parameter for the DeepLLL condition.
+        gamma (int): The gamma parameter for the DeepLLL condition.
+
+    Returns:
+        bool: True if the basis is weakly DeepLLL-reduced, False otherwise.
+    """
+    if delta < 0.25 or delta >= 1.0:
+        raise ValueError("Delta must be in the range [0.25, 1.0).")
+    
+    n, m = basis.shape
+
+    lib.isWeaklyDeepLLL.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_double,
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.isWeaklyDeepLLL.restype = ctypes.c_bool
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = basis[i].ctypes.data_as(ctypes.POINTER(ctypes.c_long))
+
+    return lib.isWeaklyDeepLLL(basis_ptr, ctypes.c_double(delta), n, m)
