@@ -133,6 +133,17 @@ MatrixXli seysenUnimodular(const MatrixXld R_, const long n, const long m);
  */
 void LLL(const double delta, const long end, const long n);
 
+/**
+ * @brief Applies DeepLLL-reduction
+ *
+ * @param delta reduction parameter
+ * @param gamma depth
+ * @param end end index
+ * @param h start index
+ * @param n rank of lattice
+ */
+void deepLLL(const double delta, const long gamma, const long end, const long h, const long n);
+
 extern "C"
 {
     /**
@@ -320,6 +331,34 @@ extern "C"
         long **basis_ptr,
         const double delta,
         const long beta,
+        const long max_loops,
+        const bool pruning,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies DeepBKZ-reduction to lattice basis
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter to deep-exchange condition
+     * @param beta block-size
+     * @param gamma depth for DeepLLL
+     * @param max_loops maximam loops times of tour
+     * @param pruning if make use of pruning or not
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of the Hermite-factor
+     * @param output_err output error or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void deepBKZ(
+        long **basis_ptr,
+        const double delta,
+        const long beta,
+        const long gamma,
         const long max_loops,
         const bool pruning,
         const bool output_sl,

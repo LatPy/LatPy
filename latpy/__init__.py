@@ -46,5 +46,6 @@ __all__ = [
     "pot_lll",
     "potential_lll",
     "enum_sv",
-    "bkz"
+    "bkz",
+    "deep_bkz"
 ]
