@@ -7,6 +7,9 @@
 
 #include <NTL/ZZ.h>
 #include <NTL/mat_ZZ.h>
+#include <NTL/RR.h>
+#include <NTL/mat_RR.h>
+#include <NTL/LLL.h>
 
 void L2(
     long **basis_ptr,
@@ -14,6 +17,7 @@ void L2(
     const double eta,
     const bool output_sl,
     const bool output_rhf,
+    const bool output_err,
     const long n,
     const long m)
 {
@@ -21,9 +25,12 @@ void L2(
     const double delta_hat = (delta + 1) * 0.5;
     const double eta_bar = (eta + 0.5) * 0.5;
     long double max;
-    FILE *log_sl, *log_rhf;
+    FILE *log_sl, *log_rhf, *err;
+    MatrixXld err_mat = MatrixXld::Zero(n, n);
+    NTL::vec_RR B_ntl;
+    NTL::mat_RR mu_ntl;
     NTL::mat_ZZ basis_ntl;
-    
+
     basis = MatrixXli::Zero(n, m);
     basis_ntl.SetDims(n, m);
 
@@ -54,6 +61,11 @@ void L2(
     {
         log_rhf = fopen("rhf_log.csv", "w");
         fprintf(log_rhf, "val\n");
+    }
+    if (output_err)
+    {
+        err = fopen("err.csv", "w");
+        fprintf(err, "val\n");
     }
 
     computeCF(n, m);
@@ -135,6 +147,26 @@ void L2(
         ++k;
     }
 
+    if (output_err)
+    {
+        for (i = 0; i < n; ++i)
+        {
+            for (j = 0; j < m; ++j)
+            {
+                basis_ntl[i][j] = NTL::to_ZZ(basis.coeff(i, j));
+            }
+        }
+        NTL::ComputeGS(basis_ntl, mu_ntl, B_ntl);
+        for (i = 0; i < n; ++i)
+        {
+            for (j = 0; j < i; ++j)
+            {
+                err_mat.coeffRef(i, j) = NTL::to_double(mu_ntl[i][j]) - mu.coeff(i, j);
+            }
+        }
+        fprintf(err, "%Le\n", err_mat.squaredNorm());
+    }
+
     for (i = 0; i < n; ++i)
     {
         for (j = 0; j < m; ++j)
@@ -150,5 +182,9 @@ void L2(
     if (output_rhf)
     {
         fclose(log_rhf);
+    }
+    if (output_err)
+    {
+        fclose(err);
     }
 }

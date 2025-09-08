@@ -19,16 +19,20 @@ extern "C" void BKZ(
     const bool pruning,
     const bool output_sl,
     const bool output_rhf,
+    const bool output_err,
     const long n,
     const long m)
 {
     long z, i, j, num_tour = 0, k = 0, h, d, l, p;
     long double radius;
-    FILE *log_sl, *log_rhf;
+    FILE *log_sl, *log_rhf, *err;
     VectorXli t, coeff_vec, v;
+    MatrixXld err_mat = MatrixXld::Zero(n, n);
     NTL::mat_ZZ basis_ntl;
+    NTL::vec_RR B_ntl;
+    NTL::mat_RR mu_ntl;
 
-    LLL(basis_ptr, delta, 0.5, false, false, n, m);
+    LLL(basis_ptr, delta, 0.5, false, false, false, n, m);
 
     if (output_sl)
     {
@@ -39,6 +43,11 @@ extern "C" void BKZ(
     {
         log_rhf = fopen("rhf_log.csv", "w");
         fprintf(log_rhf, "val\n");
+    }
+    if (output_err)
+    {
+        err = fopen("err.csv", "w");
+        fprintf(err, "val\n");
     }
 
     computeGSO(basis);
@@ -123,6 +132,26 @@ extern "C" void BKZ(
         }
     }
 
+    if (output_err)
+    {
+        for (i = 0; i < n; ++i)
+        {
+            for (j = 0; j < m; ++j)
+            {
+                basis_ntl[i][j] = NTL::to_ZZ(basis.coeff(i, j));
+            }
+        }
+        NTL::ComputeGS(basis_ntl, mu_ntl, B_ntl);
+        for (i = 0; i < n; ++i)
+        {
+            for (j = 0; j < i; ++j)
+            {
+                err_mat.coeffRef(i, j) = NTL::to_double(mu_ntl[i][j]) - mu.coeff(i, j);
+            }
+        }
+        fprintf(err, "%Le\n", err_mat.squaredNorm());
+    }
+
     for (i = 0; i < n; ++i)
     {
         for (j = 0; j < m; ++j)
@@ -138,5 +167,9 @@ extern "C" void BKZ(
     if (output_rhf)
     {
         fclose(log_rhf);
+    }
+    if (output_err)
+    {
+        fclose(err);
     }
 }
