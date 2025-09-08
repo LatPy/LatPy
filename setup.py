@@ -44,6 +44,7 @@ ext_modules = [
             "latpy/reduction/src/compute_gso.cpp",
             "latpy/reduction/src/compute_cf.cpp",
             "latpy/reduction/src/compute_r.cpp",
+            "latpy/reduction/src/block_qr.cpp",
             "latpy/reduction/src/deep_insertion.cpp",
             "latpy/reduction/src/rhf.cpp",
             "latpy/reduction/src/sl.cpp",
@@ -63,7 +64,8 @@ ext_modules = [
             "latpy/reduction/src/seysen.cpp",
             "latpy/reduction/src/seysen_unimodular.cpp",
             "latpy/reduction/src/qr_lll.cpp",
-            "latpy/reduction/src/qr_deep_lll.cpp"
+            "latpy/reduction/src/qr_deep_lll.cpp",
+            "latpy/reduction/src/deep_l2.cpp"
         ],
         language="c++",
         extra_compile_args=[
