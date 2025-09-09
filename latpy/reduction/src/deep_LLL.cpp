@@ -11,7 +11,7 @@
 
 #include <eigen3/Eigen/Dense>
 
-void deepLLL(
+extern "C" void deepLLL(
     long **basis_ptr,
     const double delta,
     const double eta,

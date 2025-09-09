@@ -11,7 +11,7 @@
 #include <NTL/mat_RR.h>
 #include <NTL/LLL.h>
 
-void L2(
+extern "C" void L2(
     long **basis_ptr,
     const double delta,
     const double eta,

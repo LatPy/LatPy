@@ -57,9 +57,9 @@ extern "C" void BKZ(
         if (k == n - 1)
         {
             k = 0;
+            ++num_tour;
             if (max_loops > -1)
             {
-                ++num_tour;
                 if (num_tour > max_loops)
                 {
                     break;
