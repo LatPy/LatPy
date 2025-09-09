@@ -286,6 +286,9 @@ class LatPy:
     
     def lagrange(self) -> LatPy:
         """Perform Lagrange reduction on the lattice basis.
+        
+        ## Reference
+        - J.-L. Lagrange. Recherches d'arithmétique. 1773
 
         Returns:
             LatPy: The reduced basis.
@@ -294,6 +297,9 @@ class LatPy:
 
     def gauss(self) -> LatPy:
         """Alias for lagrange method.
+        
+        ## Reference
+        - J.-L. Lagrange. Recherches d'arithmétique. 1773
 
         Returns:
             LatPy: The reduced basis.
@@ -302,6 +308,9 @@ class LatPy:
 
     def lagrange_gauss(self) -> LatPy:
         """Alias for lagrange method.
+        
+        ## Reference
+        - J.-L. Lagrange. Recherches d'arithmétique. 1773
 
         Returns:
             LatPy: The reduced basis.
@@ -329,6 +338,10 @@ class LatPy:
     
     def lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform LLL reduction on the lattice basis with given delta and eta parameters.
+        
+        ## Reference
+        - A. K. Lenstra and H. W. Lenstra and L. Lovász, Factoring polynomials with rational coefficients, 1982
+        - R. Bottesch and M. W. Haslbeck and R. Thiemann, A verified efficient implementation of the LLL basis reduction algorithm, 2018
 
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
@@ -357,6 +370,10 @@ class LatPy:
 
     def l3(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for lll method.
+        
+        ## Reference
+        - A. K. Lenstra and H. W. Lenstra and L. Lovász, Factoring polynomials with rational coefficients, 1982
+        - R. Bottesch and M. W. Haslbeck and R. Thiemann, A verified efficient implementation of the LLL basis reduction algorithm, 2018
 
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
@@ -369,6 +386,10 @@ class LatPy:
 
     def lenstra_lenstra_lovasz(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for lll method.
+        
+        ## Reference
+        - A. K. Lenstra and H. W. Lenstra and L. Lovász, Factoring polynomials with rational coefficients, 1982
+        - R. Bottesch and M. W. Haslbeck and R. Thiemann, A verified efficient implementation of the LLL basis reduction algorithm, 2018
 
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
@@ -381,7 +402,10 @@ class LatPy:
 
     def l2(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform L2 reduction on the lattice basis with given delta and eta parameters.
-
+        
+        ## Reference
+        - P. Q. Nguyen and D. Stehlé. Floating-point LLL revisited. 2005
+        - P. Q. Nguyen and D. Stehlé. An LLL algorithm with quadratic complexity. 2009
         Args:
             delta (float, optional): The delta parameter for L2 reduction. Defaults to 0.99.
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
@@ -396,6 +420,9 @@ class LatPy:
 
     def deep_lll(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform Deep LLL reduction on the lattice basis with given delta, eta, and gamma parameters.
+        
+        ## Reference
+        - C.-P. Schnorr and M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problems. 1994
 
         Args:
             delta (float, optional): The delta parameter for Deep LLL reduction. Defaults to 0.99.
@@ -443,6 +470,9 @@ class LatPy:
 
     def lll_with_deep_insertions(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for deep_lll method.
+        
+        ## Reference
+        - C.-P. Schnorr and M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problems. 1994
 
         Args:
             delta (float, optional): The delta parameter for Deep LLL reduction. Defaults to 0.99.
@@ -474,6 +504,9 @@ class LatPy:
 
     def pot_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform Potential LLL reduction on the lattice basis with given delta and eta parameters.
+        
+        ## Reference
+        - F. Fontein and M. Schneider and U. Wagner. PotLLL: A polynomial time version of LLL with deep insertions. 2014
 
         Args:
             delta (float, optional): The delta parameter for Potential LLL reduction. Defaults to 0.99.
@@ -489,6 +522,9 @@ class LatPy:
     
     def potential_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for pot_lll method.
+        
+        ## Reference
+        - F. Fontein and M. Schneider and U. Wagner. PotLLL: A polynomial time version of LLL with deep insertions. 2014
 
         Args:
             delta (float, optional): The delta parameter for Potential LLL reduction. Defaults to 0.99.
@@ -503,6 +539,9 @@ class LatPy:
     
     def enum_sv(self, pruning: bool = False) -> np.ndarray[int]:
         """Enumerates the shortest vector in the lattice basis using the SVP algorithm.
+        
+        ## Reference
+        - N. Gama and P. Q. Nguyen and O. Regev. Lattice enumeration using extreme pruning. 2010
 
         Args:
             pruning (bool, optional): Whether to use pruning. Defaults to False.
@@ -514,6 +553,9 @@ class LatPy:
 
     def bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform BKZ reduction on the lattice basis with given delta and beta parameters.
+        
+        ## Reference
+        - C.-P. Schnorr and M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problems. 1994
 
         Args:
             delta (float, optional): The delta parameter for BKZ reduction. Defaults to 0.99.
@@ -531,6 +573,9 @@ class LatPy:
 
     def block_korkine_zolotarev(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Alias for bkz method.
+        
+        ## Reference
+        - C.-P. Schnorr and M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problems. 1994
 
         Args:
             delta (float, optional): The delta parameter for BKZ reduction. Defaults to 0.99.
@@ -565,6 +610,9 @@ class LatPy:
     
     def pot_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
         """Perform Potential BKZ reduction on the lattice basis with given delta and beta parameters.
+        
+        ## Reference
+        - 佐藤 新 and 安田 雅哉, 自己双対型PotBKZ基底簡約の提案とBKZとの比較, 2025
 
         Args:
             delta (float, optional): The delta parameter for Potential BKZ reduction. Defaults to 0.99.
