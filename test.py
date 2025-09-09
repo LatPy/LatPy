@@ -1,7 +1,8 @@
 import latpy
 
-C = latpy.svp_challenge(50, 9)
+C = latpy.svp_challenge(70, 0)
 print(C)
+"""
 print(C.compute_gso())
 print(C.volume())
 print(C.sl())
@@ -35,12 +36,20 @@ print(C.deep_l2(gamma=50)[0].is_deep_lll(0.99))
 print("PotLLL reduced:")
 print(C.pot_lll())
 print(C.pot_lll()[0].is_lll(0.99))
+"""
+
 print("BKZ reduced:")
-print(C.bkz(beta=20, pruning=True))
-print(C.bkz(beta=20, pruning=True)[0].sl())
-print("DeepBKZ reduced:")
-print(C.deep_bkz(beta=20, pruning=True, gamma=50))
-print(C.deep_bkz(beta=20, pruning=True, gamma=50)[0].sl())
-print("PotBKZ reduced:")
-print(C.pot_bkz(beta=20))
-print("Done")
+C = C.deep_lll(gamma=70)[0]
+print("DeepLLL finished")
+D = C.deep_l2(gamma=70)[0]
+print("DeepL2 finished")
+D = D.bkz(beta=50, pruning=True)[0]
+print(D)
+print(D.bkz(beta=65, pruning=True))
+# print(C.bkz(beta=20, pruning=True)[0].sl())
+# print("DeepBKZ reduced:")
+# print(C.deep_bkz(beta=20, pruning=True, gamma=50))
+# print(C.deep_bkz(beta=20, pruning=True, gamma=50)[0].sl())
+# print("PotBKZ reduced:")
+# print(C.pot_bkz(beta=20))
+# print("Done")

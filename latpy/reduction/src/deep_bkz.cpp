@@ -13,7 +13,7 @@
 
 #include "svp.h"
 
-void deepBKZ(
+extern "C" void deepBKZ(
     long **basis_ptr,
     const double delta,
     const long beta,

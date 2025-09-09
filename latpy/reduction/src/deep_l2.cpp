@@ -11,7 +11,7 @@
 #include <NTL/mat_RR.h>
 #include <NTL/LLL.h>
 
-void deepL2(
+extern "C" void deepL2(
     long **basis_ptr,
     const double delta,
     const double eta,
@@ -29,6 +29,7 @@ void deepL2(
     bool is_shifted = false;
     VectorXli X(n);
     s = VectorXld::Zero(n);
+    R = MatrixXld::Zero(n, n);
     MatrixXld Q = MatrixXld::Zero(n, n), B_star = MatrixXld::Zero(n, m), err_mat = MatrixXld::Zero(n, n);
     FILE *log_sl, *log_rhf, *err;
     NTL::mat_ZZ basis_ntl;
