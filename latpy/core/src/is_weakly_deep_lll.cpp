@@ -18,7 +18,7 @@ extern "C" bool isWeaklyDeepLLL(long **basis_ptr, const double delta, const long
             basis.coeffRef(i, j) = basis_ptr[i][j];
         }
     }
-    computeGSO(basis, mu, B);
+    computeGSO();
 
     for (k = 0; k < n; ++k)
     {

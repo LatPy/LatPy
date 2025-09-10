@@ -6,6 +6,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 void updateDeepInsertionGSO(const long i, const long k, const long n)
 {
     long j, l;

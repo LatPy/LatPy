@@ -24,7 +24,7 @@ extern "C" char *pot(long **basis_ptr, const long n, const long m)
             basis.coeffRef(i, j) = basis_ptr[i][j];
         }
     }
-    computeGSO(basis, mu, B);
+    computeGSO();
 
     NTL::RR p = NTL::to_RR(1);
     for (i = 0; i < n; ++i)

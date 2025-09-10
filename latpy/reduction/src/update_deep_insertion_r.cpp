@@ -6,6 +6,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 void updateDeepInsertionR(const long i, const long k, const long n)
 {
     const VectorXld tmp = R.diagonal();

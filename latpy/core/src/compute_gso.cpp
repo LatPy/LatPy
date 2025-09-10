@@ -3,26 +3,26 @@
 #include <iostream>
 #include <cstdlib>
 
-void computeGSO(MatrixXli basis_, MatrixXld &mu_, VectorXld &B_)
+void computeGSO()
 {
-    const long n = basis_.rows(), m = basis_.cols();
+    const long n = basis.rows(), m = basis.cols();
     long i, j;
     MatrixXld gso_basis(n, m);
 
-    mu_ = MatrixXld::Identity(n, n);
-    B_ = VectorXld::Zero(n);
+    mu = MatrixXld::Identity(n, n);
+    B = VectorXld::Zero(n);
 
     for (i = 0; i < n; ++i)
     {
-        mu_.coeffRef(i, i) = 1;
+        mu.coeffRef(i, i) = 1;
         gso_basis.row(i) = basis.row(i).cast<long double>();
 
         for (j = 0; j < i; ++j)
         {
-            mu_.coeffRef(i, j) = basis.row(i).cast<long double>().dot(gso_basis.row(j)) / B_.coeff(j);
-            gso_basis.row(i) -= mu_.coeff(i, j) * gso_basis.row(j);
+            mu.coeffRef(i, j) = basis.row(i).cast<long double>().dot(gso_basis.row(j)) / B.coeff(j);
+            gso_basis.row(i) -= mu.coeff(i, j) * gso_basis.row(j);
         }
-        B_.coeffRef(i) = gso_basis.row(i).squaredNorm();
+        B.coeffRef(i) = gso_basis.row(i).squaredNorm();
     }
 }
 

@@ -5,6 +5,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 #define LOG099 -0.010050335853501441183548857558547706085515007674629873378L
 
 bool potENUM(VectorXli &coeff, const double delta, const long start, const long end)

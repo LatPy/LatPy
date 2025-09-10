@@ -12,6 +12,8 @@
 #include <NTL/mat_RR.h>
 #include <NTL/LLL.h>
 
+#include "core.h"
+
 extern "C" void LLL(
     long **basis_ptr,
     const double delta,
@@ -44,14 +46,14 @@ extern "C" void LLL(
 
     if (n == m)
     {
-        volume = NTL::abs(NTL::determinant(basis_ntl));
+        vol = NTL::abs(NTL::determinant(basis_ntl));
     }
     else
     {
-        volume = NTL::SqrRoot(NTL::determinant(basis_ntl * NTL::transpose(basis_ntl)));
+        vol = NTL::SqrRoot(NTL::determinant(basis_ntl * NTL::transpose(basis_ntl)));
     }
 
-    computeGSO(basis);
+    computeGSO();
 
     if (output_sl)
     {

@@ -9,6 +9,7 @@
 #include <NTL/mat_ZZ.h>
 #include <NTL/LLL.h>
 
+#include "core.h"
 #include "svp.h"
 
 extern "C" void BKZ(
@@ -50,7 +51,7 @@ extern "C" void BKZ(
         fprintf(err, "val\n");
     }
 
-    computeGSO(basis);
+    computeGSO();
 
     for (z = k = 0; z < n - 2;)
     {
@@ -128,7 +129,7 @@ extern "C" void BKZ(
                 }
             }
 
-            computeGSO(basis);
+            computeGSO();
         }
         else
         {

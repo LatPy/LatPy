@@ -4,6 +4,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 void updateSwapGSO(const long k, const long n)
 {
     long double t;

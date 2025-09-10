@@ -4,6 +4,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 void deepInsertion(const long i, const long k)
 {
     const VectorXli t = basis.row(k);

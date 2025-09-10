@@ -3,76 +3,10 @@
 
 #include <eigen3/Eigen/Dense>
 
-#include <NTL/ZZ.h>
-
 typedef Eigen::Matrix<long, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> MatrixXli;        // long-type matrix
 typedef Eigen::Matrix<long, 1, Eigen::Dynamic> VectorXli;                                      // long-type vector
 typedef Eigen::Matrix<long double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> MatrixXld; // long double-type matrix
 typedef Eigen::Matrix<long double, 1, Eigen::Dynamic> VectorXld;                               // long double-type vector
-
-extern VectorXld B;
-extern VectorXld s;
-extern MatrixXli basis;
-extern MatrixXld mu;
-extern MatrixXld R;
-extern NTL::ZZ volume;
-
-/**
- * @brief
- *
- * @param j
- * @param visited
- * @return long double
- */
-long double diagR(const long i, const long j, std::vector<std::vector<bool>> visited);
-
-/**
- * @brief Compute GSO-informations of the input lattice
- *
- * @param basis_ lattice basis
- */
-void computeGSO(MatrixXli basis_);
-
-/**
- * @brief Compute R-factor of the input lattice
- *
- * @param basis_ lattice basis
- */
-void computeR(MatrixXli basis_);
-
-/**
- * @brief
- *
- * @param k
- * @param Q
- * @param B_star
- * @param s
- */
-void blockQR(const long k, const bool is_shifted, MatrixXld &Q, MatrixXld &B_star);
-
-/**
- * @brief compiutes CF-information of the lattice
- *
- * @param n rank of lattice
- *
- */
-void computeCF(const long n, const long m);
-
-/**
- * @brief computes GSA-slope
- *
- * @param n rank of lattice
- * @return long double GSA-slope
- */
-long double sl(const long n);
-
-/**
- * @brief computes root of Hermite-factor
- *
- * @param n rank of lattice
- * @return long double root of Hermite-factor
- */
-long double rhf(const long n);
 
 /**
  * @brief Applies deep-insetion \sigma_{i, k} to lattice basis

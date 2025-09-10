@@ -11,6 +11,8 @@
 #include <NTL/mat_RR.h>
 #include <NTL/LLL.h>
 
+#include "core.h"
+
 extern "C" void L2(
     long **basis_ptr,
     const double delta,
@@ -45,11 +47,11 @@ extern "C" void L2(
 
     if (n == m)
     {
-        volume = NTL::abs(NTL::determinant(basis_ntl));
+        vol = NTL::abs(NTL::determinant(basis_ntl));
     }
     else
     {
-        volume = NTL::SqrRoot(NTL::determinant(basis_ntl * NTL::transpose(basis_ntl)));
+        vol = NTL::SqrRoot(NTL::determinant(basis_ntl * NTL::transpose(basis_ntl)));
     }
 
     if (output_sl)
