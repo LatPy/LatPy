@@ -49,5 +49,6 @@ extern "C" bool isSeysen(long **basis_ptr, const long n, const long m)
         }
     }
 
-    return isSeysen(computeR(basis));
+    computeR();
+    return isSeysen(R);
 }

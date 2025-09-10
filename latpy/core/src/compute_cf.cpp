@@ -1,4 +1,4 @@
-#include <reduction.h>
+#include "core.h"
 
 #include <iostream>
 

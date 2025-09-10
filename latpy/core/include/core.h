@@ -5,18 +5,57 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include <NTL/ZZ.h>
+
 typedef Eigen::Matrix<long, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> MatrixXli;        // long-type matrix
 typedef Eigen::Matrix<long, 1, Eigen::Dynamic> VectorXli;                                      // long-type vector
 typedef Eigen::Matrix<long double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> MatrixXld; // long double-type matrix
 typedef Eigen::Matrix<long double, 1, Eigen::Dynamic> VectorXld;                               // long double-type vector
 
 extern VectorXld B;
+extern VectorXld s;
 extern MatrixXli basis;
 extern MatrixXld mu;
+extern MatrixXld R;
+extern NTL::ZZ vol;
 
-void computeGSO(MatrixXli basis_, MatrixXld &mu_, VectorXld &B_);
+/**
+ * @brief computes GSA-slope
+ *
+ * @param n rank of lattice
+ * @return long double GSA-slope
+ */
+long double sl(const long n);
 
-MatrixXld computeR(MatrixXli basis_);
+/**
+ * @brief computes root of Hermite-factor
+ *
+ * @param n rank of lattice
+ * @return long double root of Hermite-factor
+ */
+long double rhf(const long n);
+
+void computeGSO();
+
+void computeR();
+
+/**
+ * @brief
+ *
+ * @param k
+ * @param Q
+ * @param B_star
+ * @param s
+ */
+void blockQR(const long k, const bool is_shifted, MatrixXld &Q, MatrixXld &B_star);
+
+/**
+ * @brief compiutes CF-information of the lattice
+ *
+ * @param n rank of lattice
+ *
+ */
+void computeCF(const long n, const long m);
 
 bool isSeysen(const MatrixXld R);
 
@@ -129,7 +168,7 @@ extern "C"
 
     /**
      * @brief Checks if lattice basis is weakly-DeepLLL-reduced, that is, satisfies deep-exchange condition or not
-     * 
+     *
      * @param basis_ptr lattice basis matrix
      * @param delta reduction parameter
      * @param n rank of lattice

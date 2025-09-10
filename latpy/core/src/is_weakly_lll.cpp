@@ -11,7 +11,7 @@ extern "C" bool isWeaklyLLL(long **basis_ptr, const double delta, const long n, 
             basis.coeffRef(i, j) = basis_ptr[i][j];
         }
     }
-    computeGSO(basis, mu, B);
+    computeGSO();
 
     for (k = 1; k < n; ++k)
     {

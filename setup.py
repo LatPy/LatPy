@@ -6,7 +6,9 @@ ext_modules = [
         sources=[
             "latpy/core/src/globals.cpp",
             "latpy/core/src/compute_gso.cpp",
+            "latpy/core/src/compute_cf.cpp",
             "latpy/core/src/compute_r.cpp",
+            "latpy/core/src/block_qr.cpp",
             "latpy/core/src/volume.cpp",
             "latpy/core/src/sl.cpp",
             "latpy/core/src/pot.cpp",
@@ -40,15 +42,15 @@ ext_modules = [
     Extension(
         "latpy.reduction._reduction",
         sources=[
-            "latpy/reduction/src/globals.cpp",
-            "latpy/reduction/src/diag_r.cpp",
-            "latpy/reduction/src/compute_gso.cpp",
-            "latpy/reduction/src/compute_cf.cpp",
-            "latpy/reduction/src/compute_r.cpp",
-            "latpy/reduction/src/block_qr.cpp",
+            "latpy/core/src/globals.cpp",
+            "latpy/core/src/compute_gso.cpp",
+            "latpy/core/src/compute_cf.cpp",
+            "latpy/core/src/compute_r.cpp",
+            "latpy/core/src/block_qr.cpp",
+            "latpy/core/src/volume.cpp",
+            "latpy/core/src/sl.cpp",
+            "latpy/core/src/rhf.cpp",
             "latpy/reduction/src/deep_insertion.cpp",
-            "latpy/reduction/src/rhf.cpp",
-            "latpy/reduction/src/sl.cpp",
             "latpy/reduction/src/update_swap_gso.cpp",
             "latpy/reduction/src/update_swap_r.cpp",
             "latpy/reduction/src/update_deep_insertion_gso.cpp",
@@ -56,9 +58,9 @@ ext_modules = [
             "latpy/reduction/src/pot_enum.cpp",
             "latpy/reduction/src/lagrange.cpp",
             "latpy/reduction/src/size.cpp",
-            "latpy/reduction/src/LLL.cpp",
-            "latpy/reduction/src/deep_LLL.cpp",
-            "latpy/reduction/src/L2.cpp",
+            "latpy/reduction/src/lll.cpp",
+            "latpy/reduction/src/deep_lll.cpp",
+            "latpy/reduction/src/l2.cpp",
             "latpy/svp/src/globals.cpp",
             "latpy/svp/src/coeff_pruning.cpp",
             "latpy/svp/src/enum_sv.cpp",
@@ -89,14 +91,15 @@ ext_modules = [
         ],
         include_dirs=[
             "latpy/reduction/include",
-            "latpy/svp/include",
+            "latpy/core/include",
+            "latpy/svp/include"
         ]
     ),
     Extension(
         "latpy.svp._svp",
         sources=[
-            "latpy/reduction/src/globals.cpp",
-            "latpy/reduction/src/compute_gso.cpp",
+            "latpy/core/src/globals.cpp",
+            "latpy/core/src/compute_gso.cpp",
             "latpy/svp/src/globals.cpp",
             "latpy/svp/src/coeff_pruning.cpp",
             "latpy/svp/src/enum_sv.cpp"
@@ -118,7 +121,7 @@ ext_modules = [
         ],
         include_dirs=[
             "latpy/svp/include",
-            "latpy/reduction/include"
+            "latpy/core/include"
         ]
     )
 ]

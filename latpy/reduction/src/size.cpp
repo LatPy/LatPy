@@ -5,6 +5,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 extern "C" void size(long **basis_ptr, const double eta, const long n, const long m)
 {
     long i, j, q;
@@ -18,7 +20,7 @@ extern "C" void size(long **basis_ptr, const double eta, const long n, const lon
         }
     }
 
-    computeGSO(basis);
+    computeGSO();
 
     for (i = 1; i < n; ++i)
     {

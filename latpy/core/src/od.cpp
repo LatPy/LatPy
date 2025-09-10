@@ -6,7 +6,6 @@
 long double od(long **basis_ptr, const long n, const long m)
 {
     long double p = 1.0;
-    NTL::ZZ vol;
     NTL::ZZ sq_norm;
     NTL::mat_ZZ basis_ntl;
     basis_ntl.SetDims(n, m);

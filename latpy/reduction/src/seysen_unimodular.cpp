@@ -5,6 +5,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 MatrixXli seysenUnimodular(const MatrixXld R_, const long n, const long m)
 {
     if (n == 1)

@@ -12,6 +12,7 @@
 #include <NTL/LLL.h>
 
 #include "svp.h"
+#include "core.h"
 
 extern "C" void deepBKZ(
     long **basis_ptr,
@@ -53,7 +54,7 @@ extern "C" void deepBKZ(
         fprintf(err, "val\n");
     }
 
-    computeGSO(basis);
+    computeGSO();
 
     for (z = k = 0; z < n - 2;)
     {
@@ -131,7 +132,7 @@ extern "C" void deepBKZ(
                 }
             }
 
-            computeGSO(basis);
+            computeGSO();
             deepLLL(delta, gamma, h, k - 1, n);
         }
         else

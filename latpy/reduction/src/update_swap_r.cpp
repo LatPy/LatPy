@@ -5,6 +5,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 void updateSwapR(const long k, const long n)
 {
     long double d;

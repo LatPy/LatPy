@@ -5,6 +5,8 @@
 
 #include <eigen3/Eigen/Dense>
 
+#include "core.h"
+
 extern "C" void lagrange(long **basis_ptr, const long n, const long m)
 {
     long i, j, q;

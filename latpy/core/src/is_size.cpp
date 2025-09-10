@@ -16,7 +16,7 @@ extern "C" bool isSize(long **basis_ptr, const long n, const long m)
             basis.coeffRef(i, j) = basis_ptr[i][j];
         }
     }
-    computeGSO(basis, mu, B);
+    computeGSO();
 
     for (i = 0; i < n; ++i)
     {

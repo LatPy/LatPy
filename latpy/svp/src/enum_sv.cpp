@@ -6,7 +6,7 @@
 
 #include <eigen3/Eigen/Dense>
 
-#include "reduction.h"
+#include "core.h"
 
 extern "C" void enumSV(long **basis_ptr, long *coeff, const bool pruning, const long n, const long m)
 {
@@ -29,7 +29,7 @@ extern "C" void enumSV(long **basis_ptr, long *coeff, const bool pruning, const 
             basis.coeffRef(i, j) = basis_ptr[i][j];
         }
     }
-    computeGSO(basis);
+    computeGSO();
 
     // Set radius for enumeration
     coeffPruning(n, pruning);
