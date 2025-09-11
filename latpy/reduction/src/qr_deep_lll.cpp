@@ -13,6 +13,63 @@
 
 #include "core.h"
 
+void qrDeepLLL(const double delta, const long gamma, const long end, const long h, const long n)
+{
+    bool flag;
+    long q, i, j, k;
+    long double C;
+
+    computeR();
+
+    for (k = 1; k < n;)
+    {
+        for (j = k - 1; j > -1; --j)
+        {
+            if (fabsl(R.coeff(k, j)) + fabsl(R.coeff(k, j)) > fabsl(R.coeff(j, j)))
+            {
+                q = std::lroundl(R.coeff(k, j) / R.coeff(j, j));
+                basis.row(k) -= q * basis.row(j);
+                R.row(k).head(j + 1) -= static_cast<long double>(q) * R.row(j).head(j + 1);
+            }
+        }
+
+        flag = false;
+        C = basis.row(k).squaredNorm();
+        for (i = 0; i < k;)
+        {
+            if (C < delta * R.coeff(i, i) * R.coeff(i, i))
+            {
+                if ((i <= gamma) and (k - i + 1 <= gamma))
+                {
+                    flag = true;
+                }
+            }
+
+            if (not flag)
+            {
+                C -= R.coeff(k, i) * R.coeff(k, i);
+                ++i;
+            }
+            else
+            {
+                deepInsertion(i, k);
+                updateDeepInsertionR(i, k, n);
+
+                if (i >= 1)
+                {
+                    k = i - 1;
+                }
+                else
+                {
+                    k = 0;
+                }
+            }
+        }
+
+        ++k;
+    }
+}
+
 void qrDeepLLL(
     long **basis_ptr,
     const double delta,

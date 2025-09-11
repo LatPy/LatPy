@@ -74,7 +74,8 @@ ext_modules = [
             "latpy/reduction/src/pot_lll.cpp",
             "latpy/reduction/src/deep_bkz.cpp",
             "latpy/reduction/src/pot_bkz.cpp",
-            "latpy/reduction/src/qr_bkz.cpp"
+            "latpy/reduction/src/qr_bkz.cpp",
+            "latpy/reduction/src/qr_deep_bkz.cpp"
         ],
         language="c++",
         extra_compile_args=[
