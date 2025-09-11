@@ -120,6 +120,7 @@ def lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.5, output_sl
         eta (float, optional): The eta parameter for size reduction within LLL. Defaults to 0.5.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The LLL reduced basis.
@@ -182,6 +183,7 @@ def qr_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.5, output
         eta (float, optional): The eta parameter for size reduction within QR-LLL. Defaults to 0.5.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The QR-LLL reduced basis.
@@ -245,6 +247,7 @@ def deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.5, gamm
         gamma (int, optional): The gamma parameter for Deep LLL reduction. Defaults to 20.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The Deep LLL reduced basis.
@@ -309,6 +312,7 @@ def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.5, g
         gamma (int, optional): The gamma parameter for QR-Deep LLL reduction. Defaults to 20.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The QR-Deep LLL reduced basis.
@@ -372,6 +376,7 @@ def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl
         eta (float, optional): The eta parameter for size reduction within L2. Defaults to 0.55.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The L2 reduced basis.
@@ -435,6 +440,7 @@ def deep_l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, gamm
         gamma (int, optional): The gamma parameter for Deep L2 reduction. Defaults to 20.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The Deep L2 reduced basis.
@@ -498,6 +504,7 @@ def pot_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.5, outpu
         eta (float, optional): The eta parameter for size reduction within PotLLL. Defaults to 0.5.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The PotLLL reduced basis.
@@ -561,6 +568,7 @@ def bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: 
         pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The BKZ reduced basis.
@@ -630,6 +638,7 @@ def deep_bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, gamma:
         pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
         output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
         output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
 
     Returns:
         np.ndarray[int]: The Deep BKZ reduced basis.
@@ -667,6 +676,73 @@ def deep_bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, gamma:
             
     lib.deepBKZ(basis_ptr, ctypes.c_double(delta), ctypes.c_long(beta), ctypes.c_long(gamma), ctypes.c_long(max_loops), ctypes.c_bool(pruning), ctypes.c_bool(output_sl_log), ctypes.c_bool(output_rhf_log), ctypes.c_bool(output_err), n, m)
     
+    reduced_basis = np.zeros((n, m), dtype=np.int64)
+    for i in range(n):
+        for j in range(m):
+            reduced_basis[i, j] = basis_ptr[i][j]
+    sl_log = []
+    rhf_log = []
+    err = 0
+    if output_sl_log:
+        if os.path.exists("sl_log.csv"):
+            sl_log = list(pd.read_csv("sl_log.csv")["val"])
+            os.remove("sl_log.csv")
+    if output_rhf_log:
+        if os.path.exists("rhf_log.csv"):
+            rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
+            os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
+    return reduced_basis, sl_log, rhf_log, err
+
+def qr_bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
+    """Performs QR-based BKZ reduction on a basis with given delta and beta parameters.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+        delta (float, optional): The delta parameter for QR-BKZ reduction. Defaults to 0.99.
+        beta (int, optional): The block size parameter for QR-BKZ reduction. Defaults to 20.
+        max_loops (int, optional): The maximum number of tours through the basis. Defaults to -1 (no limit).
+        pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
+        output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+        output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
+
+    Returns:
+        np.ndarray[int]: The QR-BKZ reduced basis.
+    """
+    if delta <= 0.25 or delta >= 1:
+        raise ValueError("Delta must be in the range (0.25, 1).")
+    if beta < 2:
+        raise ValueError("Beta must be at least 2.")
+    if max_loops < -1:
+        raise ValueError("max_loops must be -1 (no limit) or a non-negative integer.")
+    
+    n, m = basis.shape
+
+    lib.qrBKZ.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_double,
+        ctypes.c_long,
+        ctypes.c_long,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.qrBKZ.restype = None
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = (ctypes.c_long * m)()
+        for j in range(m):
+            basis_ptr[i][j] = ctypes.c_long(basis[i, j])
+
+    lib.qrBKZ(basis_ptr, ctypes.c_double(delta), ctypes.c_long(beta), ctypes.c_long(max_loops), ctypes.c_bool(pruning), ctypes.c_bool(output_sl_log), ctypes.c_bool(output_rhf_log), ctypes.c_bool(output_err), n, m)
+
     reduced_basis = np.zeros((n, m), dtype=np.int64)
     for i in range(n):
         for j in range(m):

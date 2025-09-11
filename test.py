@@ -59,6 +59,8 @@ D = D.bkz(beta=60, pruning=True)[0]
 print("60 finished")
 print(D)
 print(D.enum_sv(pruning=True))
+print("QRBKZ reduced:")
+print(C.qr_bkz(beta=20, pruning=True))
 # print(D.bkz(beta=65, pruning=True))
 # print(C.bkz(beta=20, pruning=True)[0].sl())
 # print("DeepBKZ reduced:")

@@ -346,6 +346,9 @@ class LatPy:
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -361,6 +364,7 @@ class LatPy:
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -378,6 +382,9 @@ class LatPy:
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -394,6 +401,9 @@ class LatPy:
         Args:
             delta (float, optional): The delta parameter for LLL reduction. Defaults to 0.99.
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -411,6 +421,7 @@ class LatPy:
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.55.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -430,6 +441,7 @@ class LatPy:
             gamma (int, optional): The gamma parameter for Deep LLL reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -446,6 +458,7 @@ class LatPy:
             gamma (int, optional): The gamma parameter for Deep L2 reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -462,6 +475,7 @@ class LatPy:
             gamma (int, optional): The gamma parameter for Deep L2 reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -480,6 +494,7 @@ class LatPy:
             gamma (int, optional): The gamma parameter for Deep LLL reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -495,6 +510,7 @@ class LatPy:
             gamma (int, optional): The gamma parameter for QR-Deep LLL reduction. Defaults to 20.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -513,6 +529,7 @@ class LatPy:
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -531,6 +548,7 @@ class LatPy:
             eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -564,6 +582,7 @@ class LatPy:
             pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -584,6 +603,7 @@ class LatPy:
             pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
@@ -601,11 +621,30 @@ class LatPy:
             pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.deep_bkz(self.basis, delta, beta, gamma, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
+        return LatPy(reduced_basis), sl_log, rhf_log, err
+    
+    def qr_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+        """Perform QR-BKZ reduction on the lattice basis with given delta and beta parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for QR-BKZ reduction. Defaults to 0.99.
+            beta (int, optional): The block size parameter for QR-BKZ reduction. Defaults to 20.
+            max_loops (int, optional): The maximum number of tours through the basis. Defaults to -1 (no limit).
+            pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log, err = reduction.qr_bkz(self.basis, delta, beta, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
         return LatPy(reduced_basis), sl_log, rhf_log, err
     
     def pot_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
@@ -620,6 +659,7 @@ class LatPy:
             max_loops (int, optional): The maximum number of tours through the basis. Defaults to -1 (no limit).
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
             LatPy: The reduced basis.
