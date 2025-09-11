@@ -64,6 +64,7 @@ ext_modules = [
             "latpy/svp/src/globals.cpp",
             "latpy/svp/src/coeff_pruning.cpp",
             "latpy/svp/src/enum_sv.cpp",
+            "latpy/svp/src/qr_enum_sv.cpp",
             "latpy/reduction/src/bkz.cpp",
             "latpy/reduction/src/seysen.cpp",
             "latpy/reduction/src/seysen_unimodular.cpp",
@@ -72,7 +73,8 @@ ext_modules = [
             "latpy/reduction/src/deep_l2.cpp",
             "latpy/reduction/src/pot_lll.cpp",
             "latpy/reduction/src/deep_bkz.cpp",
-            "latpy/reduction/src/pot_bkz.cpp"
+            "latpy/reduction/src/pot_bkz.cpp",
+            "latpy/reduction/src/qr_bkz.cpp"
         ],
         language="c++",
         extra_compile_args=[

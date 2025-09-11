@@ -52,13 +52,13 @@ void updateDeepInsertionR(const long i, const long k, const long n);
 
 /**
  * @brief enumerate delta-anomolous vector
- * 
+ *
  * @param coeff coefficient vector
  * @param delta reduction paramerter
  * @param start star index
  * @param end end index
- * @return true 
- * @return false 
+ * @return true
+ * @return false
  */
 bool potENUM(VectorXli &coeff, const double delta, const long start, const long end);
 
@@ -89,6 +89,15 @@ void LLL(const double delta, const long end, const long n);
  * @param n rank of lattice
  */
 void deepLLL(const double delta, const long gamma, const long end, const long h, const long n);
+
+/**
+ * @brief Allplies LLL=reduction with QR-factorization
+ *
+ * @param delta reduction parameter
+ * @param end end index
+ * @param n rank of lattice
+ */
+void qrLLL(const double delta, const long end, const long n);
 
 /**
  * @brief Applies PotLLL-reduction
@@ -313,6 +322,32 @@ extern "C"
         const double delta,
         const long beta,
         const long gamma,
+        const long max_loops,
+        const bool pruning,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies BKZ-reduction with QR factorization
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter
+     * @param beta block size
+     * @param max_loops maximam loops times
+     * @param pruning if make use of pruning or not
+     * @param output_sl putput GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param output_err output err or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void qrBKZ(
+        long **basis_ptr,
+        const double delta,
+        const long beta,
         const long max_loops,
         const bool pruning,
         const bool output_sl,

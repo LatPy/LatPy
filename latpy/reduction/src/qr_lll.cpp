@@ -13,6 +13,36 @@
 
 #include "core.h"
 
+void qrLLL(const double delta, const long end, const long n)
+{
+    long j, k, q;
+
+    for (k = 1; k < end;)
+    {
+        for (j = k - 1; j > -1; --j)
+        {
+            if (fabsl(R.coeff(k, j)) + fabsl(R.coeff(k, j)) > fabsl(R.coeff(j, j)))
+            {
+                q = std::lroundl(R.coeff(k, j) / R.coeff(j, j));
+                basis.row(k) -= q * basis.row(j);
+                R.row(k).head(j + 1) -= static_cast<long double>(q) * R.row(j).head(j + 1);
+            }
+        }
+
+        if ((k > 0) and (R.coeff(k, k) * R.coeff(k, k) < delta * R.coeff(k - 1, k - 1) * R.coeff(k - 1, k - 1) - R.coeff(k, k - 1) * R.coeff(k, k - 1)))
+        {
+            basis.row(k - 1).swap(basis.row(k));
+            updateSwapR(k, n);
+
+            --k;
+        }
+        else
+        {
+            ++k;
+        }
+    }
+}
+
 extern "C" void qrLLL(
     long **basis_ptr,
     const double delta,
