@@ -49,5 +49,6 @@ __all__ = [
     "bkz",
     "deep_bkz",
     "pot_bkz",
-    "qr_bkz"
+    "qr_bkz",
+    "qr_deep_bkz"
 ]

@@ -100,6 +100,17 @@ void deepLLL(const double delta, const long gamma, const long end, const long h,
 void qrLLL(const double delta, const long end, const long n);
 
 /**
+ * @brief Applies DeepLLL-reduction with QR-factorization
+ *
+ * @param delta reduction parameter
+ * @param gamma depth
+ * @param end end index
+ * @param h start index
+ * @param n rank of lattice
+ */
+void qrDeepLLL(const double delta, const long gamma, const long end, const long h, const long n);
+
+/**
  * @brief Applies PotLLL-reduction
  *
  * @param delta reduction parameter
@@ -348,6 +359,34 @@ extern "C"
         long **basis_ptr,
         const double delta,
         const long beta,
+        const long max_loops,
+        const bool pruning,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies DeepBKZ to lattice basis with QR-factorization
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter
+     * @param beta blocksize
+     * @param gamma depth
+     * @param max_loops maximam loops times
+     * @param pruning make use of pruning or not
+     * @param output_sl output root of Hermite-factor
+     * @param output_rhf output root of Hermite-factor
+     * @param output_err output error or not
+     * @param n rank of lattice
+     * @param m null of latticeF
+     */
+    void qrDeepBKZ(
+        long **basis_ptr,
+        const double delta,
+        const long beta,
+        const long gamma,
         const long max_loops,
         const bool pruning,
         const bool output_sl,
