@@ -684,6 +684,22 @@ class LatPy:
         """
         reduced_basis, sl_log, rhf_log, err = reduction.pot_bkz(self.basis, delta, beta, max_loops, output_sl_log, output_rhf_log, output_err)
         return LatPy(reduced_basis), sl_log, rhf_log, err
+    
+    def dual_pot_lll(self, delta: float = 0.99, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+        """Perform Dual Potential LLL reduction on the lattice basis with given delta and eta parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for Dual Potential LLL reduction. Defaults to 0.99.
+            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
+
+        Returns:
+            LatPy: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log, err = reduction.dual_pot_lll(self.basis, delta, output_sl_log, output_rhf_log, output_err)
+        return LatPy(reduced_basis), sl_log, rhf_log, err
 
 def svp_challenge(dim: int, seed: int) -> LatPy:
     """Return the basis of the SVP challenge lattice.

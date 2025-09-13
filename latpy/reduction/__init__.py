@@ -17,5 +17,6 @@ __all__ = [
     "deep_bkz",
     "pot_bkz",
     "qr_bkz",
-    "qr_deep_bkz"
+    "qr_deep_bkz",
+    "dual_pot_lll"
 ]

@@ -51,10 +51,12 @@ ext_modules = [
             "latpy/core/src/sl.cpp",
             "latpy/core/src/rhf.cpp",
             "latpy/reduction/src/deep_insertion.cpp",
+            "latpy/reduction/src/dual_deep_insertion.cpp",
             "latpy/reduction/src/update_swap_gso.cpp",
             "latpy/reduction/src/update_swap_r.cpp",
             "latpy/reduction/src/update_deep_insertion_gso.cpp",
             "latpy/reduction/src/update_deep_insertion_r.cpp",
+            "latpy/reduction/src/update_dual_deep_insertion_gso.cpp",
             "latpy/reduction/src/pot_enum.cpp",
             "latpy/reduction/src/lagrange.cpp",
             "latpy/reduction/src/size.cpp",
@@ -75,7 +77,8 @@ ext_modules = [
             "latpy/reduction/src/deep_bkz.cpp",
             "latpy/reduction/src/pot_bkz.cpp",
             "latpy/reduction/src/qr_bkz.cpp",
-            "latpy/reduction/src/qr_deep_bkz.cpp"
+            "latpy/reduction/src/qr_deep_bkz.cpp",
+            "latpy/reduction/src/dual_pot_lll.cpp"
         ],
         language="c++",
         extra_compile_args=[
