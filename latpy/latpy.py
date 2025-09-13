@@ -685,6 +685,22 @@ class Lattice:
         reduced_basis, sl_log, rhf_log, err = reduction.pot_bkz(self.basis, delta, beta, max_loops, output_sl_log, output_rhf_log, output_err)
         return Lattice(reduced_basis), sl_log, rhf_log, err
     
+    def dual_deep_lll(self, delta: float = 0.99, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
+        """Perform Dual Deep LLL reduction on the lattice basis with given delta and gamma parameters.
+
+        Args:
+            delta (float, optional): The delta parameter for Dual Deep LLL reduction. Defaults to 0.99.
+            gamma (int, optional): The gamma parameter for Dual Deep LLL reduction. Defaults to 20.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error. Defaults to False.
+
+        Returns:
+            Lattice: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log, err = reduction.dual_deep_lll(self.basis, delta, gamma, output_sl_log, output_rhf_log, output_err)
+        return Lattice(reduced_basis), sl_log, rhf_log, err
+    
     def dual_pot_lll(self, delta: float = 0.99, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Dual Potential LLL reduction on the lattice basis with given delta and eta parameters.
         

@@ -49,6 +49,14 @@ void updateSwapR(const long k, const long n);
  */
 void updateDeepInsertionGSO(const long i, const long k, const long n);
 
+/**
+ * @brief Updates GSO-information with applying dual-deep-insertion \widehat{\sigma}_{k, l} to lattice basis
+ *
+ * @param k index
+ * @param l index
+ * @param hD
+ * @param n rank of lattice
+ */
 void updateDualDeepInsertionGSO(const long k, const long l, const VectorXld hD, const long n);
 
 /**
@@ -428,17 +436,39 @@ extern "C"
         const bool output_err,
         const long n,
         const long m);
+    
+    /**
+     * @brief Applies DeepLLL-reduction to dual basis
+     * 
+     * @param basis_ptr 
+     * @param delta 
+     * @param gamma 
+     * @param output_sl 
+     * @param output_rhf 
+     * @param output_err 
+     * @param n 
+     * @param m 
+     */
+    void dualDeepLLL(
+        long **basis_ptr,
+        const double delta,
+        const long gamma,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
 
     /**
-     * @brief
+     * @brief Applying PotLLL-reduction to dual basis
      *
-     * @param basis_ptr
-     * @param delta
-     * @param output_sl
-     * @param output_rhf
-     * @param output_err
-     * @param n
-     * @param m
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param output_err outpur error or not
+     * @param n rank of lattice
+     * @param m null of lattice
      */
     void dualPotLLL(
         long **basis_ptr,
