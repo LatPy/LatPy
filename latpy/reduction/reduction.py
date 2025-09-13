@@ -897,6 +897,68 @@ def pot_bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loo
         os.remove("err.csv")
     return reduced_basis, sl_log, rhf_log, err
 
+def dual_deep_lll(basis: np.ndarray[int], delta: float = 0.99, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
+    """Performs Dual Deep LLL reduction on a basis with given delta and eta parameters.
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+        delta (float, optional): The delta parameter for Dual Deep LLL reduction. Defaults to 0.99.
+        gamma (int, optional): The gamma parameter for Dual Deep LLL reduction. Defaults to 20.
+        output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+        output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
+
+    Returns:
+        np.ndarray[int]: The Dual Deep LLL reduced basis.
+    """
+    if delta <= 0.25 or delta >= 1:
+        raise ValueError("Delta must be in the range (0.25, 1).")
+    if gamma < 1:
+        raise ValueError("Gamma must be at least 1.")
+    
+    n, m = basis.shape
+
+    lib.dualDeepLLL.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_double,
+        ctypes.c_long,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.dualDeepLLL.restype = None
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = (ctypes.c_long * m)()
+        for j in range(m):
+            basis_ptr[i][j] = ctypes.c_long(basis[i, j])
+
+    lib.dualDeepLLL(basis_ptr, ctypes.c_double(delta), ctypes.c_long(gamma), output_sl_log, output_rhf_log, output_err, n, m)
+
+    reduced_basis = np.zeros((n, m), dtype=np.int64)
+    for i in range(n):
+        for j in range(m):
+            reduced_basis[i, j] = basis_ptr[i][j]
+
+    sl_log = []
+    rhf_log = []
+    err = 0
+    if output_sl_log:
+        if os.path.exists("sl_log.csv"):
+            sl_log = list(pd.read_csv("sl_log.csv")["val"])
+            os.remove("sl_log.csv")
+    if output_rhf_log:
+        if os.path.exists("rhf_log.csv"):
+            rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
+            os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
+    return reduced_basis, sl_log, rhf_log, err
+
 def dual_pot_lll(basis: np.ndarray[int], delta: float = 0.99, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs Dual PotLLL reduction on a basis with given delta and eta parameters.
     Args:
