@@ -52,7 +52,7 @@ import numpy as np
 
 B = np.random.randint(100, 999, size=(50, 50), dtype=np.int64)
 
-C = latpy.LatPy(B)
+C = latpy.Lattice(B)
 print(C)
 print(C.compute_gso())
 print(C.sl())
