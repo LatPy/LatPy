@@ -7,12 +7,12 @@ from . import core
 from . import reduction
 from . import svp
 
-class LatPy:
+class Lattice:
     """
     A class for representing a lattice in n-dimensional space.
     """
     def __init__(self, basis) -> None:
-        """Initialize the LatPy class.
+        """Initialize the Lattice class.
 
         Args:
             basis (array like): The basis vectors of the lattice.
@@ -21,18 +21,18 @@ class LatPy:
         self.n, self.m = basis.shape
 
     def __repr__(self) -> str:
-        """Return a string representation of the LatPy object.
+        """Return a string representation of the Lattice object.
 
         Returns:
-            str: A string representation of the LatPy object.
+            str: A string representation of the Lattice object.
         """
-        return f"LatPy(basis={self.basis})"
+        return f"Lattice(basis={self.basis})"
 
     def __str__(self) -> str:
-        """Return a string representation of the LatPy object.
+        """Return a string representation of the Lattice object.
 
         Returns:
-            str: A string representation of the LatPy object.
+            str: A string representation of the Lattice object.
         """
         return f"{self.n}-dimensional lattice with basis:\n{self.basis}"
     
@@ -284,40 +284,40 @@ class LatPy:
         """
         return self.is_deep_lll(delta)
     
-    def lagrange(self) -> LatPy:
+    def lagrange(self) -> Lattice:
         """Perform Lagrange reduction on the lattice basis.
         
         ## Reference
         - J.-L. Lagrange. Recherches d'arithmétique. 1773
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
-        return LatPy(reduction.lagrange(self.basis))
+        return Lattice(reduction.lagrange(self.basis))
 
-    def gauss(self) -> LatPy:
+    def gauss(self) -> Lattice:
         """Alias for lagrange method.
         
         ## Reference
         - J.-L. Lagrange. Recherches d'arithmétique. 1773
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.lagrange()
 
-    def lagrange_gauss(self) -> LatPy:
+    def lagrange_gauss(self) -> Lattice:
         """Alias for lagrange method.
         
         ## Reference
         - J.-L. Lagrange. Recherches d'arithmétique. 1773
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.lagrange()
 
-    def size(self, eta: float) -> LatPy:
+    def size(self, eta: float) -> Lattice:
         """Perform size reduction on the lattice basis with a given eta parameter.
 
         Args:
@@ -326,17 +326,17 @@ class LatPy:
         Returns:
             np.ndarray[int]: The reduced basis.
         """
-        return LatPy(reduction.size(self.basis, eta))
+        return Lattice(reduction.size(self.basis, eta))
 
-    def seysen(self) -> LatPy:
+    def seysen(self) -> Lattice:
         """Perform Seysen reduction on the lattice basis.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
-        return LatPy(reduction.seysen(self.basis))
+        return Lattice(reduction.seysen(self.basis))
     
-    def lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform LLL reduction on the lattice basis with given delta and eta parameters.
         
         ## Reference
@@ -351,12 +351,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.lll(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-    def qr_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def qr_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform QR-LLL reduction on the lattice basis with given delta and eta parameters.
 
         Args:
@@ -367,12 +367,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.qr_lll(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-    def l3(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def l3(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Alias for lll method.
         
         ## Reference
@@ -387,11 +387,11 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.lll(delta, eta, output_sl_log, output_rhf_log, output_err)
 
-    def lenstra_lenstra_lovasz(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def lenstra_lenstra_lovasz(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Alias for lll method.
         
         ## Reference
@@ -406,11 +406,11 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.lll(delta, eta, output_sl_log, output_rhf_log, output_err)
 
-    def l2(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def l2(self, delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform L2 reduction on the lattice basis with given delta and eta parameters.
         
         ## Reference
@@ -424,12 +424,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.l2(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-    def deep_lll(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def deep_lll(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Deep LLL reduction on the lattice basis with given delta, eta, and gamma parameters.
         
         ## Reference
@@ -444,12 +444,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.deep_lll(self.basis, delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-    def deep_l2(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def deep_l2(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Deep L2 reduction on the lattice basis with given delta, eta, and gamma parameters.
 
         Args:
@@ -461,12 +461,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.deep_l2(self.basis, delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-    def l2_with_deep_insertions(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def l2_with_deep_insertions(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Alias for deep_l2 method.
 
         Args:
@@ -478,11 +478,11 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.deep_l2(delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
 
-    def lll_with_deep_insertions(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def lll_with_deep_insertions(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Alias for deep_lll method.
         
         ## Reference
@@ -497,11 +497,11 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.deep_lll(delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
 
-    def qr_deep_lll(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float]]:
+    def qr_deep_lll(self, delta: float = 0.99, eta: float = 0.5, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float]]:
         """Perform QR-Deep LLL reduction on the lattice basis with given delta, eta, and gamma parameters.
 
         Args:
@@ -513,12 +513,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.qr_deep_lll(self.basis, delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-    def pot_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def pot_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Potential LLL reduction on the lattice basis with given delta and eta parameters.
         
         ## Reference
@@ -532,12 +532,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.pot_lll(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
     
-    def potential_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def potential_lll(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Alias for pot_lll method.
         
         ## Reference
@@ -551,7 +551,7 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.pot_lll(delta, eta, output_sl_log, output_rhf_log, output_err)
     
@@ -569,7 +569,7 @@ class LatPy:
         """
         return svp.enum_sv(self.basis, pruning)
 
-    def bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform BKZ reduction on the lattice basis with given delta and beta parameters.
         
         ## Reference
@@ -585,12 +585,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.bkz(self.basis, delta, beta, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-    def block_korkine_zolotarev(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def block_korkine_zolotarev(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Alias for bkz method.
         
         ## Reference
@@ -606,11 +606,11 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         return self.bkz(delta, beta, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
     
-    def deep_bkz(self, delta: float = 0.99, beta: int = 20, gamma: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def deep_bkz(self, delta: float = 0.99, beta: int = 20, gamma: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Deep BKZ reduction on the lattice basis with given delta, beta, and gamma parameters.
 
         Args:
@@ -624,12 +624,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.deep_bkz(self.basis, delta, beta, gamma, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
     
-    def qr_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def qr_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform QR-BKZ reduction on the lattice basis with given delta and beta parameters.
 
         Args:
@@ -642,12 +642,12 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.qr_bkz(self.basis, delta, beta, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
     
-    def qr_deep_bkz(self, delta: float = 0.99, beta: int = 20, gamma: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def qr_deep_bkz(self, delta: float = 0.99, beta: int = 20, gamma: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform QR-Deep BKZ reduction on the lattice basis with given delta, beta, and gamma parameters.
 
         Args:
@@ -660,12 +660,12 @@ class LatPy:
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
             output_err (bool, optional): Whether to output the error. Defaults to False.
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.qr_deep_bkz(self.basis, delta, beta, gamma, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
     
-    def pot_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def pot_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Potential BKZ reduction on the lattice basis with given delta and beta parameters.
         
         ## Reference
@@ -680,33 +680,35 @@ class LatPy:
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.pot_bkz(self.basis, delta, beta, max_loops, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
     
-    def dual_pot_lll(self, delta: float = 0.99, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[LatPy, list[float], list[float], float]:
+    def dual_pot_lll(self, delta: float = 0.99, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Dual Potential LLL reduction on the lattice basis with given delta and eta parameters.
+        
+        ## Reference
+        - 佐藤 新 and 安田 雅哉, 自己双対型PotBKZ基底簡約の提案とBKZとの比較, 2025
 
         Args:
             delta (float, optional): The delta parameter for Dual Potential LLL reduction. Defaults to 0.99.
-            eta (float, optional): The eta parameter for size reduction. Defaults to 0.5.
             output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
             output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
             output_err (bool, optional): Whether to output the error. Defaults to False.
 
         Returns:
-            LatPy: The reduced basis.
+            Lattice: The reduced basis.
         """
         reduced_basis, sl_log, rhf_log, err = reduction.dual_pot_lll(self.basis, delta, output_sl_log, output_rhf_log, output_err)
-        return LatPy(reduced_basis), sl_log, rhf_log, err
+        return Lattice(reduced_basis), sl_log, rhf_log, err
 
-def svp_challenge(dim: int, seed: int) -> LatPy:
+def svp_challenge(dim: int, seed: int) -> Lattice:
     """Return the basis of the SVP challenge lattice.
 
     Returns:
-        LatPy: The basis of the SVP challenge lattice.
+        Lattice: The basis of the SVP challenge lattice.
     """
     with resources.files("latpy.svp_challenge_list").joinpath(f"svp_challenge_{dim}_{seed}.txt").open('r') as f:
         basis = np.loadtxt(f, dtype=np.int64)[: dim, :dim]
-    return LatPy(basis)
+    return Lattice(basis)
