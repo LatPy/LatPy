@@ -1,4 +1,4 @@
-from latpy.latpy import LatPy, svp_challenge
+from latpy.latpy import Lattice, svp_challenge
 from .core import *
 from .reduction import *
 
@@ -18,7 +18,7 @@ __all__ = [
     "hermite_factor",
     "rhf", 
     "root_hermite_factor",
-    "LatPy",
+    "Lattice",
     "gh",
     "gaussian_heuristic",
     "od",
