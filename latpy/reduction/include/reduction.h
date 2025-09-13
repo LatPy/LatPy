@@ -17,6 +17,14 @@ typedef Eigen::Matrix<long double, 1, Eigen::Dynamic> VectorXld;                
 void deepInsertion(const long i, const long k);
 
 /**
+ * @brief Applies dual-deep-insertion \widehat{\sigma}_{k, l} to lattice basis
+ *
+ * @param k index
+ * @param l index
+ */
+void dualDeepInsertion(const long k, const long l);
+
+/**
  * @brief Updates GSO-information with swapping of the lattice basis vectors \bm{b}_{k-1} and \bm{b}_{k}
  *
  * @param k index
@@ -40,6 +48,8 @@ void updateSwapR(const long k, const long n);
  * @param n rank of lattice
  */
 void updateDeepInsertionGSO(const long i, const long k, const long n);
+
+void updateDualDeepInsertionGSO(const long k, const long l, const VectorXld hD, const long n);
 
 /**
  * @brief Updates R-factor with applying deep-insetion \sigma_{i, k} to lattice basis
@@ -413,6 +423,26 @@ extern "C"
         const double delta,
         const long beta,
         const long max_loops,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
+
+    /**
+     * @brief
+     *
+     * @param basis_ptr
+     * @param delta
+     * @param output_sl
+     * @param output_rhf
+     * @param output_err
+     * @param n
+     * @param m
+     */
+    void dualPotLLL(
+        long **basis_ptr,
+        const double delta,
         const bool output_sl,
         const bool output_rhf,
         const bool output_err,

@@ -18,6 +18,8 @@ extern MatrixXli basis;
 extern MatrixXld mu;
 extern MatrixXld R;
 extern NTL::ZZ vol;
+extern MatrixXld hmu;
+extern VectorXld hB;
 
 /**
  * @brief computes GSA-slope

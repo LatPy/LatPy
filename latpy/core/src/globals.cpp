@@ -6,3 +6,5 @@ MatrixXli basis;
 MatrixXld mu;
 MatrixXld R;
 NTL::ZZ vol;
+MatrixXld hmu;
+VectorXld hB;
