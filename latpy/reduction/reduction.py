@@ -897,6 +897,64 @@ def pot_bkz(basis: np.ndarray[int], delta: float = 0.99, beta: int = 20, max_loo
         os.remove("err.csv")
     return reduced_basis, sl_log, rhf_log, err
 
+def hkz(basis: np.ndarray[int], pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
+    """Performs HKZ reduction on a basis.
+    
+    ## Reference
+        - C.-P. Schnorr and M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problems. 1994
+
+    Args:
+        basis (np.ndarray[int]): The input basis vectors.
+        pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
+        output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+        output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+        output_err (bool, optional): Whether to output the error log. Defaults to False.
+
+    Returns:
+        np.ndarray[int]: The HKZ reduced basis.
+    """
+    n, m = basis.shape
+
+    lib.HKZ.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_bool,
+        ctypes.c_long,
+        ctypes.c_long
+    )
+    lib.HKZ.restype = None
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = (ctypes.c_long * m)()
+        for j in range(m):
+            basis_ptr[i][j] = ctypes.c_long(basis[i, j])
+
+    lib.HKZ(basis_ptr, ctypes.c_bool(pruning), ctypes.c_bool(output_sl_log), ctypes.c_bool(output_rhf_log), ctypes.c_bool(output_err), n, m)
+
+    reduced_basis = np.zeros((n, m), dtype=np.int64)
+    for i in range(n):
+        for j in range(m):
+            reduced_basis[i, j] = basis_ptr[i][j]
+
+    sl_log = []
+    rhf_log = []
+    err = 0
+    if output_sl_log:
+        if os.path.exists("sl_log.csv"):
+            sl_log = list(pd.read_csv("sl_log.csv")["val"])
+            os.remove("sl_log.csv")
+    if output_rhf_log:
+        if os.path.exists("rhf_log.csv"):
+            rhf_log = list(pd.read_csv("rhf_log.csv")["val"])
+            os.remove("rhf_log.csv")
+    if os.path.exists("err.csv"):
+        err = float(pd.read_csv("err.csv")["val"].iloc[-1])
+        os.remove("err.csv")
+    return reduced_basis, sl_log, rhf_log, err
+    
 def dual_deep_lll(basis: np.ndarray[int], delta: float = 0.99, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs Dual Deep LLL reduction on a basis with given delta and eta parameters.
 

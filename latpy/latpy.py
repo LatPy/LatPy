@@ -665,6 +665,24 @@ class Lattice:
         reduced_basis, sl_log, rhf_log, err = reduction.qr_deep_bkz(self.basis, delta, beta, gamma, max_loops, pruning, output_sl_log, output_rhf_log, output_err)
         return Lattice(reduced_basis), sl_log, rhf_log, err
     
+    def hkz(self, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
+        """Perform HKZ reduction on the lattice basis with given parameters.
+        
+        ## Reference
+        - C.-P. Schnorr and M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problems. 1994
+
+        Args:
+            pruning (bool, optional): Whether to use pruning in the SVP solver. Defaults to False.
+            output_sl_log (bool, optional): Whether to output the GSA-slope log. Defaults to False.
+            output_rhf_log (bool, optional): Whether to output the RHF log. Defaults to False.
+            output_err (bool, optional): Whether to output the error log. Defaults to False.
+
+        Returns:
+            Lattice: The reduced basis.
+        """
+        reduced_basis, sl_log, rhf_log, err = reduction.hkz(self.basis, pruning, output_sl_log, output_rhf_log, output_err)
+        return Lattice(reduced_basis), sl_log, rhf_log, err
+
     def pot_bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Potential BKZ reduction on the lattice basis with given delta and beta parameters.
         
