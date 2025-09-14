@@ -460,6 +460,26 @@ extern "C"
         const long m);
 
     /**
+     * @brief Applies LLL-reduction to dual basis
+     *
+     * @param basis_ptr lattice basis matrix
+     * @param delta reduction parameter
+     * @param output_sl output GSA-slope or not
+     * @param output_rhf output root of Hermite-factor or not
+     * @param output_err output error or not
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void dualLLL(
+        long **basis_ptr,
+        const double delta,
+        const bool output_sl,
+        const bool output_rhf,
+        const bool output_err,
+        const long n,
+        const long m);
+
+    /**
      * @brief Applies DeepLLL-reduction to dual basis
      *
      * @param basis_ptr
