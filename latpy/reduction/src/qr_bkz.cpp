@@ -154,6 +154,7 @@ void qrBKZ(
 
     if (output_err)
     {
+        basis_ntl.SetDims(n, m);
         for (i = 0; i < n; ++i)
         {
             for (j = 0; j < m; ++j)
@@ -166,7 +167,7 @@ void qrBKZ(
         {
             for (j = 0; j < i; ++j)
             {
-                err_mat.coeffRef(i, j) = NTL::to_double(mu_ntl[i][j]) - mu.coeff(i, j);
+                err_mat.coeffRef(i, j) = NTL::to_double(mu_ntl[i][j]) - R.coeff(i, j) / R.coeff(j, j);
             }
         }
         fprintf(err, "%Le\n", err_mat.squaredNorm());
