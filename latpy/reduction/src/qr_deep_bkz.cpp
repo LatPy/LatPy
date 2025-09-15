@@ -37,6 +37,7 @@ void qrDeepBKZ(
     NTL::mat_RR mu_ntl;
 
     qrDeepLLL(basis_ptr, delta, 0.5, gamma, false, false, false, n, m);
+    qrBKZ(basis_ptr, delta, beta, max_loops, pruning, false, false, false, n, m);
 
     if (output_sl)
     {

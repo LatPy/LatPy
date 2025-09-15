@@ -37,6 +37,7 @@ extern "C" void deepBKZ(
     NTL::mat_RR mu_ntl;
 
     deepLLL(basis_ptr, delta, 0.5, gamma, false, false, false, n, m);
+    BKZ(basis_ptr, delta, beta, max_loops, pruning, false, false, false, n, m);
 
     if (output_sl)
     {
@@ -156,7 +157,7 @@ extern "C" void deepBKZ(
     if (output_err)
     {
         basis_ntl.SetDims(n, m);
-        
+
         for (i = 0; i < n; ++i)
         {
             for (j = 0; j < m; ++j)
