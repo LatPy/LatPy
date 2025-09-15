@@ -155,6 +155,8 @@ extern "C" void deepBKZ(
 
     if (output_err)
     {
+        basis_ntl.SetDims(n, m);
+        
         for (i = 0; i < n; ++i)
         {
             for (j = 0; j < m; ++j)
