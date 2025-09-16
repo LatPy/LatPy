@@ -37,7 +37,7 @@ print("PotLLL reduced:")
 print(C.pot_lll())
 print(C.pot_lll()[0].is_lll(0.99))
 
-
+'''
 print("BKZ reduced:")
 C = C.deep_lll(gamma=70)[0]
 print("DeepLLL finished")
@@ -60,6 +60,7 @@ print("60 finished")
 print(D)
 print("HKZ reduced:")
 print(D.hkz(pruning=True))
+'''
 print("QRBKZ reduced:")
 print(C.qr_bkz(beta=20, pruning=True))
 print("QRDeepBKZ reduced:")
@@ -70,6 +71,9 @@ print("DualDeepLLL reduced:")
 print(C.dual_deep_lll(gamma=60))
 print("DualLLL reduced:")
 print(C.dual_lll())
+print("Enumeration:")
+print(C.deep_lll(gamma=80)[0].enum_sv(pruning=True, alg="gs"))
+print(C.deep_lll(gamma=80)[0].enum_sv(pruning=True, alg="qr"))
 print("Done")
 # print(D.bkz(beta=65, pruning=True))
 # print(C.bkz(beta=20, pruning=True)[0].sl())

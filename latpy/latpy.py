@@ -555,7 +555,7 @@ class Lattice:
         """
         return self.pot_lll(delta, eta, output_sl_log, output_rhf_log, output_err)
     
-    def enum_sv(self, pruning: bool = False) -> np.ndarray[int]:
+    def enum_sv(self, pruning: bool = False, alg: str = "gs") -> np.ndarray[int]:
         """Enumerates the shortest vector in the lattice basis using the SVP algorithm.
         
         ## Reference
@@ -563,11 +563,12 @@ class Lattice:
 
         Args:
             pruning (bool, optional): Whether to use pruning. Defaults to False.
+            alg (str, optional): The algorithm to use ('gs' for Gram-Schmidt, 'qr' for QR decomposition). Defaults to "gs".
 
         Returns:
             np.ndarray[int]: The shortest vector found in the lattice.
         """
-        return svp.enum_sv(self.basis, pruning)
+        return svp.enum_sv(self.basis, pruning, alg)
 
     def bkz(self, delta: float = 0.99, beta: int = 20, max_loops: int = -1, pruning: bool = False, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform BKZ reduction on the lattice basis with given delta and beta parameters.
