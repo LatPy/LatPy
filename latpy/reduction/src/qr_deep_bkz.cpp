@@ -28,7 +28,6 @@ void qrDeepBKZ(
     const long m)
 {
     long z, i, j, num_tour = 0, k = 0, h, d, l, p;
-    long double radius;
     FILE *log_sl, *log_rhf, *err;
     VectorXli t, coeff_vec, v;
     MatrixXld err_mat = MatrixXld::Zero(n, n);
@@ -92,9 +91,7 @@ void qrDeepBKZ(
         }
         d = l - k + 1;
 
-        radius = delta * R.coeff(k - 1) * R.coeff(k - 1);
-
-        if (qrEnumSV(coeff_vec, radius, pruning, k - 1, l))
+        if (qrEnumSV(coeff_vec, delta * R.coeff(k - 1, k - 1) * R.coeff(k - 1, k - 1), pruning, k - 1, l))
         {
             v = coeff_vec * basis.block(k - 1, 0, d, m);
 

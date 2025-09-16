@@ -109,9 +109,11 @@ ext_modules = [
         sources=[
             "latpy/core/src/globals.cpp",
             "latpy/core/src/compute_gso.cpp",
+            "latpy/core/src/compute_r.cpp",
             "latpy/svp/src/globals.cpp",
             "latpy/svp/src/coeff_pruning.cpp",
-            "latpy/svp/src/enum_sv.cpp"
+            "latpy/svp/src/enum_sv.cpp",
+            "latpy/svp/src/qr_enum_sv.cpp"
         ],
         language="c++",
         extra_compile_args=[
