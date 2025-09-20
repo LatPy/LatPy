@@ -8,6 +8,7 @@ __all__ = [
     "seysen",
     "lll",
     "qr_lll",
+    "frac_lll",
     "deep_lll",
     "qr_deep_lll",
     "deep_l2",
