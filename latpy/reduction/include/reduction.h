@@ -58,6 +58,15 @@ void updateSwapR(const long k, const long n);
 void updateDeepInsertionGSO(const long i, const long k, const long n);
 
 /**
+ * @brief Updates GSO-informations with applying deep-insetion \sigma_{i, k} to lattice basis without fpa
+ *
+ * @param i index
+ * @param k index
+ * @param n rank of lattice
+ */
+void updateDeepInsertionFracGSO(const long i, const long k, const long n);
+
+/**
  * @brief Updates GSO-information with applying dual-deep-insertion \widehat{\sigma}_{k, l} to lattice basis
  *
  * @param k index
@@ -258,6 +267,22 @@ extern "C"
         const bool output_sl,
         const bool output_rhf,
         const bool output_err,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies deepLLL-reduction to lattice basis without fpa
+     *
+     * @param basis_ptr lattice basis reduction
+     * @param a
+     * @param b
+     * @param n rank of lattice
+     * @param m null of lattice
+     */
+    void fracDeepLLL(
+        long **basis_ptr,
+        const long a,
+        const long b,
         const long n,
         const long m);
 
@@ -471,7 +496,8 @@ extern "C"
      * @brief Applies LLL-reduction without fpa.
      *
      * @param basis_ptr
-     * @param delta
+     * @param a
+     * @param b
      * @param n
      * @param m
      */

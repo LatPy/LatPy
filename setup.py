@@ -84,7 +84,9 @@ ext_modules = [
             "latpy/reduction/src/hkz.cpp",
             "latpy/reduction/src/dual_lll.cpp",
             "latpy/reduction/src/update_swap_frac_gso.cpp",
-            "latpy/reduction/src/frac_lll.cpp"
+            "latpy/reduction/src/frac_lll.cpp",
+            "latpy/reduction/src/update_deep_insertion_frac_gso.cpp",
+            "latpy/reduction/src/frac_deep_lll.cpp"
         ],
         language="c++",
         extra_compile_args=[

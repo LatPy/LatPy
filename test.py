@@ -1,6 +1,6 @@
 import latpy
 
-C = latpy.svp_challenge(60, 0)
+C = latpy.svp_challenge(50, 0)
 print(C)
 
 print(C.compute_gso())
@@ -76,6 +76,8 @@ print(C.deep_lll(gamma=80)[0].enum_sv(pruning=True, alg="gs"))
 print(C.deep_lll(gamma=80)[0].enum_sv(pruning=True, alg="qr"))
 print("FracLLL: ")
 print(C.frac_lll())
+print("FracDeepLLL")
+print(C.frac_deep_lll())
 print("Done")
 # print(D.bkz(beta=65, pruning=True))
 # print(C.bkz(beta=20, pruning=True)[0].sl())

@@ -11,6 +11,7 @@ __all__ = [
     "frac_lll",
     "deep_lll",
     "qr_deep_lll",
+    "frac_deep_lll",
     "deep_l2",
     "l2",
     "pot_lll",
