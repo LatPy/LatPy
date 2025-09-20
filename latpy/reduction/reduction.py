@@ -407,6 +407,46 @@ def qr_deep_lll(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.5, g
 
     return reduced_basis, sl_log, rhf_log, err
 
+def frac_deep_lll(basis: np.ndarray[int], a: int = 99, b: int = 100) -> np.ndarray[int]:
+    """Performs Deep LLL reduction on a basis with given a and b without floating point arithemetics.
+
+    Args:
+        basis (np.ndarray[int]): The input basis
+        a (int, optional): num of reduction parameter for Lovasz condition. Defaults to 99.
+        b (int, optional): den of reduction parameter for Lovasz condition. Defaults to 100.
+
+    Returns:
+        np.ndarray[int]: _description_
+    """
+    if a / b <= 0.25 or a / b >= 1:
+        raise ValueError("a / b must be in the range (0.25, 1).")
+    
+    n, m = basis.shape
+
+    lib.fracDeepLLL.argtypes = (
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_long)),  # basis
+        ctypes.c_long,                                  # a
+        ctypes.c_long,                                  # b
+        ctypes.c_long,                                  # n
+        ctypes.c_long                                   # m
+    )
+    lib.fracDeepLLL.restype = None
+
+    basis_ptr = (ctypes.POINTER(ctypes.c_long) * n)()
+    for i in range(n):
+        basis_ptr[i] = (ctypes.c_long * m)()
+        for j in range(m):
+            basis_ptr[i][j] = ctypes.c_long(basis[i, j])
+
+    lib.fracDeepLLL(basis_ptr, a, b, n, m)
+
+    reduced_basis = np.zeros((n, m), dtype=np.int64)
+    for i in range(n):
+        for j in range(m):
+            reduced_basis[i, j] = basis_ptr[i][j]
+
+    return reduced_basis
+
 def l2(basis: np.ndarray[int], delta: float = 0.99, eta: float = 0.55, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[np.ndarray[int], list[float], list[float], float]:
     """Performs L2 reduction on a basis with given delta and eta parameters.
 

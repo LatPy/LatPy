@@ -55,5 +55,7 @@ __all__ = [
     "dual_pot_lll",
     "dual_deep_lll",
     "hkz",
-    "dual_lll"
+    "dual_lll",
+    "frac_lll",
+    "frac_deep_lll"
 ]

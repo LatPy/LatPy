@@ -374,6 +374,9 @@ class Lattice:
     
     def frac_lll(self, a: int = 99, b: int = 100) -> Lattice:
         """Performs LLL reduction on a basis with given a and b parameters without floating point arithemetics
+        
+        ## Reference
+        - さとしん, 浮動小数点演算を使用しない新しいLLLアルゴリズムfracLLLの提案, 2025
 
         Args:
             basis (np.ndarray[int]): The input basis vectors
@@ -462,6 +465,23 @@ class Lattice:
         """
         reduced_basis, sl_log, rhf_log, err = reduction.deep_lll(self.basis, delta, eta, gamma, output_sl_log, output_rhf_log, output_err)
         return Lattice(reduced_basis), sl_log, rhf_log, err
+    
+    def frac_deep_lll(self, a: int = 99, b: int = 100) -> Lattice:
+        """Performs DeepLLL reduction on a basis with given a and b parameters without floating point arithemetics
+        
+        ## Reference
+        - さとしん, 浮動小数点演算を使用しない新しいDeepLLLアルゴリズムfracDeepLLLの提案, 2025
+
+        Args:
+            basis (np.ndarray[int]): The input basis vectors
+            a (int, optional): The num. of reduction parameter for Lovasz condition. Defaults to 99.
+            b (int, optional): The den. of reduction parameter for Lovasz condition. Defaults to 100.
+
+        Returns:
+            np.ndarray[int]: The LLL reduced basis
+        """
+        reduced_basis = reduction.frac_deep_lll(self.basis, a, b)
+        return Lattice(reduced_basis)
 
     def deep_l2(self, delta: float = 0.99, eta: float = 0.55, gamma: int = 20, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Perform Deep L2 reduction on the lattice basis with given delta, eta, and gamma parameters.
