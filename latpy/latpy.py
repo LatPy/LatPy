@@ -371,6 +371,20 @@ class Lattice:
         """
         reduced_basis, sl_log, rhf_log, err = reduction.qr_lll(self.basis, delta, eta, output_sl_log, output_rhf_log, output_err)
         return Lattice(reduced_basis), sl_log, rhf_log, err
+    
+    def frac_lll(self, a: int = 99, b: int = 100) -> Lattice:
+        """Performs LLL reduction on a basis with given a and b parameters without floating point arithemetics
+
+        Args:
+            basis (np.ndarray[int]): The input basis vectors
+            a (int, optional): The num. of reduction parameter for Lovasz condition. Defaults to 99.
+            b (int, optional): The den. of reduction parameter for Lovasz condition. Defaults to 100.
+
+        Returns:
+            np.ndarray[int]: The LLL reduced basis
+        """
+        reduced_basis = reduction.frac_lll(self.basis, a, b)
+        return Lattice(reduced_basis)
 
     def l3(self, delta: float = 0.99, eta: float = 0.5, output_sl_log: bool = False, output_rhf_log: bool = False, output_err: bool = False) -> tuple[Lattice, list[float], list[float], float]:
         """Alias for lll method.

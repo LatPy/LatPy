@@ -6,6 +6,8 @@
 #include <eigen3/Eigen/Dense>
 
 #include <NTL/ZZ.h>
+#include <NTL/vec_ZZ.h>
+#include <NTL/mat_ZZ.h>
 
 typedef Eigen::Matrix<long, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> MatrixXli;        // long-type matrix
 typedef Eigen::Matrix<long, 1, Eigen::Dynamic> VectorXli;                                      // long-type vector
@@ -20,6 +22,9 @@ extern MatrixXld R;
 extern NTL::ZZ vol;
 extern MatrixXld hmu;
 extern VectorXld hB;
+
+extern NTL::vec_ZZ B_num, B_den;
+extern NTL::mat_ZZ mu_num, mu_den;
 
 /**
  * @brief computes GSA-slope
@@ -37,8 +42,22 @@ long double sl(const long n);
  */
 long double rhf(const long n);
 
+/**
+ * @brief Compute GSO-informations of lattice basis
+ *
+ */
 void computeGSO();
 
+/**
+ * @brief Compute GSO-informations of lattice basis without fpa
+ *
+ */
+void fracGSO(NTL::mat_ZZ b);
+
+/**
+ * @brief Compute R-factor of lattice basis
+ *
+ */
 void computeR();
 
 /**

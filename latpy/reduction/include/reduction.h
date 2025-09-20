@@ -33,6 +33,14 @@ void dualDeepInsertion(const long k, const long l);
 void updateSwapGSO(const long k, const long n);
 
 /**
+ * @brief Updates GSO-informations with swapping of the lattice basis vectors \bm{b}_{k-1} and \bm{b}_{k} without fpa
+ *
+ * @param k index
+ * @param n rank of lattice
+ */
+void updateSwapFracGSO(const long k, const long n);
+
+/**
  * @brief Update R-factor with swapping of the lattice basis vectors \bm{b}_{k-1} and \bm{b}_{k}
  *
  * @param k
@@ -456,6 +464,21 @@ extern "C"
         const bool output_sl,
         const bool output_rhf,
         const bool output_err,
+        const long n,
+        const long m);
+
+    /**
+     * @brief Applies LLL-reduction without fpa.
+     *
+     * @param basis_ptr
+     * @param delta
+     * @param n
+     * @param m
+     */
+    void fracLLL(
+        long **basis_ptr,
+        const long a,
+        const long b,
         const long n,
         const long m);
 
